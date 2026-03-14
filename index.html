@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pawan Ashok Funde — Aspiring Data Analyst & Cyber Security Undergraduate. Portfolio showcasing data analytics, Power BI dashboards, and BI projects." />
+  <meta name="keywords" content="Pawan Funde, Data Analyst, Power BI, Python, SQL, Cyber Security, Mumbai" />
+  <meta property="og:title" content="Pawan Funde | Data Analyst Portfolio" />
+  <meta property="og:description" content="Aspiring Data Analyst — turning raw data into actionable business insights." />
+  <title>Pawan Funde | Data Analyst Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="bracket">&lt;</span>PF<span class="bracket">/&gt;</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about"          class="nav-link">About</a></li>
+        <li><a href="#skills"         class="nav-link">Skills</a></li>
+        <li><a href="#projects"       class="nav-link">Projects</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#blog"           class="nav-link">Blog</a></li>
+        <li><a href="#contact"        class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="assets/resume/Pawan_Funde_Data_Analyst_Resume.pdf" download class="btn btn-nav-resume">
+          Download CV
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section id="hero" class="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-inner">
+      <div class="hero-badge fade-up">
+        <span class="badge-dot"></span> Open to Internship &amp; Analytics Opportunities
+      </div>
+      <h1 class="hero-name fade-up">
+        Pawan Ashok<br>
+        <span class="name-highlight">Funde</span>
+      </h1>
+      <div class="hero-role fade-up">
+        <span class="role-prefix">I'm a </span>
+        <span class="typing-wrapper">
+          <span id="typingText" class="typing-text"></span>
+          <span class="cursor-blink">|</span>
+        </span>
+      </div>
+      <p class="hero-bio fade-up">
+        B.Tech Cyber Security student passionate about <strong>Data Analytics</strong> &amp; <strong>Business Intelligence</strong>.<br>
+        Turning raw data into actionable insights — from 100K+ UPI records to ₹5B+ retail datasets.
+      </p>
+      <div class="hero-cta fade-up">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact"  class="btn btn-ghost">Get In Touch</a>
+      </div>
+      <div class="hero-socials fade-up">
+        <a href="https://github.com/pawan3funde" target="_blank" rel="noopener" class="social-pill" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/pawan-funde" target="_blank" rel="noopener" class="social-pill" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:pawanfunde96@gmail.com" class="social-pill" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+    <div class="scroll-cue">
+      <span>Scroll</span>
+      <div class="scroll-line-anim"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-label reveal">01 — About Me</div>
+      <h2 class="section-heading reveal">Who I Am</h2>
+      <div class="about-grid">
+        <div class="about-left reveal">
+          <div class="avatar-frame">
+            <div class="avatar-initials">PF</div>
+            <div class="avatar-ring"></div>
+            <div class="avatar-ring ring-2"></div>
+          </div>
+          <div class="stats-row">
+            <div class="stat">
+              <span class="stat-num">100K+</span>
+              <span class="stat-desc">Records Analyzed</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">3+</span>
+              <span class="stat-desc">Projects Done</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">8.1</span>
+              <span class="stat-desc">CGPA</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-right reveal">
+          <p class="about-para">
+            I'm a <strong>B.Tech Cyber Security student</strong> at Shah &amp; Anchor Kutchhi Engineering College, Mumbai, with a deep passion for <strong>Data Analytics and Business Intelligence</strong>. My academic journey has given me strong analytical and problem-solving skills, which I apply to real-world datasets.
+          </p>
+          <p class="about-para">
+            I've analyzed datasets ranging from <strong>100,000+ UPI transaction records</strong> for fraud detection to <strong>₹5.1B+ retail sales data</strong> for customer segmentation — using Python, SQL, Excel, and Power BI to surface actionable insights through interactive dashboards.
+          </p>
+          <p class="about-para">
+            Most recently, I qualified as a <strong>Finalist at DecodeX</strong>, a national-level 24-hour analytics hackathon at NLD Synapse 2026. I'm actively seeking internship opportunities in data analytics and business intelligence.
+          </p>
+          <div class="about-details">
+            <div class="detail-row">
+              <span class="detail-key">Location</span>
+              <span class="detail-val">Mumbai, Maharashtra, India</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-key">Education</span>
+              <span class="detail-val">B.Tech · Cyber Security (2023–Present)</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-key">Focus</span>
+              <span class="detail-val">Data Analytics &amp; Business Intelligence</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-key">Email</span>
+              <span class="detail-val"><a href="mailto:pawanfunde96@gmail.com">pawanfunde96@gmail.com</a></span>
+            </div>
+          </div>
+          <a href="assets/resume/Pawan_Funde_Data_Analyst_Resume.pdf" download class="btn btn-primary" style="margin-top:1.5rem; display:inline-flex; align-items:center; gap:8px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Resume
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+  <section id="skills" class="section section-alt">
+    <div class="container">
+      <div class="section-label reveal">02 — Skills</div>
+      <h2 class="section-heading reveal">Technologies &amp; Tools</h2>
+      <div class="skills-grid">
+
+        <div class="skill-card reveal">
+          <div class="skill-card-header">
+            <span class="skill-icon">⌨️</span>
+            <h3>Programming</h3>
+          </div>
+          <div class="tag-cluster">
+            <span class="tag tag-accent">Python</span>
+            <span class="tag tag-accent">SQL · MySQL</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">NumPy</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-header">
+            <span class="skill-icon">📊</span>
+            <h3>Analytics &amp; BI</h3>
+          </div>
+          <div class="tag-cluster">
+            <span class="tag tag-accent">Power BI</span>
+            <span class="tag tag-accent">Microsoft Excel</span>
+            <span class="tag">Tableau</span>
+            <span class="tag">DAX</span>
+            <span class="tag">EDA</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-header">
+            <span class="skill-icon">🧠</span>
+            <h3>Core Skills</h3>
+          </div>
+          <div class="tag-cluster">
+            <span class="tag tag-accent">Data Visualization</span>
+            <span class="tag tag-accent">Dashboard Design</span>
+            <span class="tag">KPI Analysis</span>
+            <span class="tag">Statistical Analysis</span>
+            <span class="tag">Data Cleaning</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-header">
+            <span class="skill-icon">🛠️</span>
+            <h3>Tools &amp; Platforms</h3>
+          </div>
+          <div class="tag-cluster">
+            <span class="tag tag-accent">Git &amp; GitHub</span>
+            <span class="tag">VS Code</span>
+            <span class="tag">Jupyter Notebook</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-header">
+            <span class="skill-icon">🔐</span>
+            <h3>Domain Knowledge</h3>
+          </div>
+          <div class="tag-cluster">
+            <span class="tag tag-accent">FinTech Analytics</span>
+            <span class="tag tag-accent">Retail Analytics</span>
+            <span class="tag">Fraud Detection</span>
+            <span class="tag">Business Intelligence</span>
+            <span class="tag">Cyber Security</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card-header">
+            <span class="skill-icon">🌐</span>
+            <h3>Languages</h3>
+          </div>
+          <div class="tag-cluster">
+            <span class="tag tag-accent">English</span>
+            <span class="tag">Hindi</span>
+            <span class="tag">Marathi</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-label reveal">03 — Projects</div>
+      <h2 class="section-heading reveal">Featured Work</h2>
+
+      <div class="projects-list">
+
+        <!-- Project 1 -->
+        <div class="project-card reveal">
+          <div class="project-meta">
+            <span class="project-num">01</span>
+            <span class="project-domain-badge">FinTech Analytics</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">UPI Transaction Fraud &amp; Risk Analytics</h3>
+            <p class="project-desc">
+              Analyzed 100,000+ UPI transaction records to identify fraud patterns, transaction failure trends, and user behavior insights. Performed data cleaning and EDA using Python and SQL. Designed KPI-driven Power BI dashboards tracking success rate, fraud ratio, transaction volume trends, and peak usage timing. Generated actionable insights to support risk monitoring and operational improvements.
+            </p>
+            <div class="project-tech-row">
+              <span class="tech-chip">Python</span>
+              <span class="tech-chip">Pandas · NumPy</span>
+              <span class="tech-chip">SQL</span>
+              <span class="tech-chip">Power BI</span>
+              <span class="tech-chip">Excel</span>
+            </div>
+            <div class="project-links-row">
+              <a href="#" class="project-link-btn" title="GitHub link coming soon">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                GitHub (Coming Soon)
+              </a>
+            </div>
+          </div>
+          <div class="project-period">Nov – Dec 2025</div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card reveal">
+          <div class="project-meta">
+            <span class="project-num">02</span>
+            <span class="project-domain-badge">Retail Analytics</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Black Friday Sales Performance Analytics</h3>
+            <p class="project-desc">
+              Analyzed ₹5.1B+ retail sales dataset across 6,000+ customers to evaluate revenue trends, customer segmentation, and product performance. Built interactive Power BI dashboards to track KPIs such as revenue contribution, top-selling categories, and customer behavior patterns. Used DAX for advanced calculations and Python for preprocessing.
+            </p>
+            <div class="project-tech-row">
+              <span class="tech-chip">Power BI</span>
+              <span class="tech-chip">SQL</span>
+              <span class="tech-chip">Excel</span>
+              <span class="tech-chip">Python</span>
+              <span class="tech-chip">DAX</span>
+            </div>
+            <div class="project-links-row">
+              <a href="#" class="project-link-btn" title="GitHub link coming soon">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                GitHub (Coming Soon)
+              </a>
+            </div>
+          </div>
+          <div class="project-period">Oct – Nov 2025</div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card reveal">
+          <div class="project-meta">
+            <span class="project-num">03</span>
+            <span class="project-domain-badge">E-Commerce BI</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">ShopEase Power BI Dashboard</h3>
+            <p class="project-desc">
+              Developed an interactive business intelligence dashboard for an e-commerce platform (ShopEase) to analyze sales performance, product trends, and customer insights. Designed for business decision-makers to monitor KPIs at a glance with clean, intuitive visualizations.
+            </p>
+            <div class="project-tech-row">
+              <span class="tech-chip">Power BI</span>
+              <span class="tech-chip">Excel</span>
+              <span class="tech-chip">Data Visualization</span>
+            </div>
+            <div class="project-links-row">
+              <a href="#" class="project-link-btn" title="GitHub link coming soon">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                GitHub (Coming Soon)
+              </a>
+            </div>
+          </div>
+          <div class="project-period">2025</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CERTIFICATIONS ═══════════════════════════ -->
+  <section id="certifications" class="section section-alt">
+    <div class="container">
+      <div class="section-label reveal">04 — Certifications</div>
+      <h2 class="section-heading reveal">Credentials &amp; Achievements</h2>
+      <div class="cert-grid">
+
+        <div class="cert-card reveal">
+          <div class="cert-glyph">🎓</div>
+          <div class="cert-info">
+            <h3 class="cert-title">Data Analytics Certification</h3>
+            <span class="cert-org">Career247</span>
+            <p class="cert-desc">Hands-on training covering Python, SQL, Excel, and Power BI. Practical experience in data cleaning, EDA, dashboard development, and KPI-based reporting using real-world datasets.</p>
+            <div class="cert-footer">
+              <span class="cert-id">ID: C2471579</span>
+              <span class="cert-year">Aug 2025</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-card cert-gold reveal">
+          <div class="cert-glyph">🏆</div>
+          <div class="cert-info">
+            <h3 class="cert-title">DecodeX — National Analytics Hackathon</h3>
+            <span class="cert-org">N.L. Dalmia Institute · NLD Synapse 2026</span>
+            <p class="cert-desc">Qualified as a Finalist in a 24-hour national analytics challenge. Solved real-world business problems using data analysis and dashboard-based insights presentation.</p>
+            <div class="cert-footer">
+              <span class="cert-badge">🥇 Finalist</span>
+              <span class="cert-year">Feb 2026</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ BLOG ═══════════════════════════ -->
+  <section id="blog" class="section">
+    <div class="container">
+      <div class="section-label reveal">05 — Blog</div>
+      <h2 class="section-heading reveal">Thoughts &amp; Articles</h2>
+      <p class="section-sub reveal">Coming soon — articles on data analytics, Power BI, fraud detection, and career insights.</p>
+      <div class="blog-grid">
+        <div class="blog-card reveal">
+          <div class="blog-tag-label">Data Analytics</div>
+          <h3 class="blog-card-title">Data Analytics for Fraud Detection</h3>
+          <p class="blog-card-excerpt">Exploring how transaction data patterns expose fraud signals and what analytics techniques work best in FinTech environments…</p>
+          <div class="blog-coming-pill">Coming Soon</div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-tag-label">Power BI</div>
+          <h3 class="blog-card-title">Power BI Dashboard Design Best Practices</h3>
+          <p class="blog-card-excerpt">A practical guide to designing intuitive, KPI-driven dashboards that actually drive business decision-making…</p>
+          <div class="blog-coming-pill">Coming Soon</div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-tag-label">Beginner Guide</div>
+          <h3 class="blog-card-title">Getting Started with Data Analytics</h3>
+          <p class="blog-card-excerpt">A beginner's roadmap — from learning Python and SQL to building your first dashboard and landing your first analytics role…</p>
+          <div class="blog-coming-pill">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+  <section id="contact" class="section section-alt">
+    <div class="container">
+      <div class="section-label reveal">06 — Contact</div>
+      <h2 class="section-heading reveal">Let's Connect</h2>
+      <p class="section-sub reveal">Open to internship opportunities, analytics collaborations, and data projects. Let's talk.</p>
+      <div class="contact-wrapper">
+        <div class="contact-info reveal">
+          <div class="cinfo-item">
+            <div class="cinfo-icon">📧</div>
+            <div>
+              <div class="cinfo-label">Email</div>
+              <a href="mailto:pawanfunde96@gmail.com" class="cinfo-val">pawanfunde96@gmail.com</a>
+            </div>
+          </div>
+          <div class="cinfo-item">
+            <div class="cinfo-icon">📍</div>
+            <div>
+              <div class="cinfo-label">Location</div>
+              <span class="cinfo-val">Mumbai, India</span>
+            </div>
+          </div>
+          <div class="cinfo-item">
+            <div class="cinfo-icon">📱</div>
+            <div>
+              <div class="cinfo-label">Phone</div>
+              <a href="tel:+917208433142" class="cinfo-val">+91 72084 33142</a>
+            </div>
+          </div>
+          <div class="cinfo-socials">
+            <a href="https://github.com/pawan3funde" target="_blank" rel="noopener" class="csocial-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/pawan-funde" target="_blank" rel="noopener" class="csocial-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cname">Your Name</label>
+              <input type="text" id="cname" name="name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="cemail">Email Address</label>
+              <input type="email" id="cemail" name="email" placeholder="john@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="csubject">Subject</label>
+            <input type="text" id="csubject" name="subject" placeholder="Internship Opportunity / Analytics Collaboration" />
+          </div>
+          <div class="form-group">
+            <label for="cmessage">Message</label>
+            <textarea id="cmessage" name="message" rows="5" placeholder="Tell me about the opportunity or project you have in mind..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">
+            Send Message
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <p class="form-note">
+            To activate email delivery, connect this form to <a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a> or <a href="https://web3forms.com" target="_blank" rel="noopener">Web3Forms</a>.
+          </p>
+          <div class="form-success" id="formSuccess">
+            ✅ Message sent! I'll get back to you soon.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#hero" class="nav-logo footer-logo">
+          <span class="bracket">&lt;</span>PF<span class="bracket">/&gt;</span>
+        </a>
+        <p class="footer-copy">Designed &amp; built by <strong>Pawan Ashok Funde</strong> · Mumbai, India</p>
+        <div class="footer-socials">
+          <a href="https://github.com/pawan3funde"           target="_blank" rel="noopener" aria-label="GitHub"   class="footer-soc"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+          <a href="https://www.linkedin.com/in/pawan-funde"  target="_blank" rel="noopener" aria-label="LinkedIn" class="footer-soc"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="mailto:pawanfunde96@gmail.com"             aria-label="Email"    class="footer-soc"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+        </div>
+        <p class="footer-year">© 2026 Pawan Ashok Funde. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
