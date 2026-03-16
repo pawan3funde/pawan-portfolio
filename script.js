@@ -209,3 +209,83 @@ if (form) {
     }, 1200);
   });
 }
+
+/* ── Hashnode Blog Feed ──────────────────────────────────────────── */
+async function fetchHashnodePosts() {
+  const blogGrid = document.getElementById("blogGrid");
+  if (!blogGrid) return;
+
+  // 🔴 REPLACE with your actual Hashnode blog URL
+  const HASHNODE_HOST = "pawanfunde.hashnode.dev";
+
+  const query = `
+    query {
+      publication(host: "${HASHNODE_HOST}") {
+        posts(first: 6) {
+          edges {
+            node {
+              title
+              brief
+              slug
+              publishedAt
+              coverImage { url }
+              tags { name }
+              readTimeInMinutes
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const res = await fetch("https://gql.hashnode.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    });
+
+    const data = await res.json();
+    const posts = data?.data?.publication?.posts?.edges;
+
+    if (!posts || posts.length === 0) {
+      blogGrid.innerHTML = `<p class="no-posts">No articles yet — check back soon!</p>`;
+      return;
+    }
+
+    blogGrid.innerHTML = posts.map(({ node }) => `
+      <a class="blog-card reveal" 
+         href="https://${HASHNODE_HOST}/${node.slug}" 
+         target="_blank">
+        <div class="blog-card-img">
+          ${node.coverImage
+            ? `<img src="${node.coverImage.url}" alt="${node.title}" loading="lazy"/>`
+            : `<div class="blog-img-placeholder">📊</div>`}
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-tags">
+            ${node.tags.slice(0, 2).map(t => 
+              `<span class="tag">${t.name}</span>`).join("")}
+          </div>
+          <h3>${node.title}</h3>
+          <p>${node.brief?.slice(0, 120)}...</p>
+          <div class="blog-meta">
+            <span>${new Date(node.publishedAt).toLocaleDateString("en-IN", {
+              day: "numeric", month: "short", year: "numeric"
+            })}</span>
+            <span>${node.readTimeInMinutes} min read</span>
+          </div>
+        </div>
+      </a>
+    `).join("");
+
+    // Re-observe new cards for scroll reveal
+    document.querySelectorAll(".blog-card.reveal").forEach(el => revealObserver.observe(el));
+
+  } catch (err) {
+    blogGrid.innerHTML = `<p class="no-posts">Could not load articles. Visit 
+      <a href="https://${HASHNODE_HOST}" target="_blank">my Hashnode</a> directly.</p>`;
+  }
+}
+
+fetchHashnodePosts();
