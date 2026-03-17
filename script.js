@@ -194,19 +194,36 @@ const form        = document.getElementById("contactForm");
 const formSuccess = document.getElementById("formSuccess");
 
 if (form) {
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const btn = form.querySelector("button[type=submit]");
     btn.textContent = "Sending…";
     btn.disabled = true;
-    /* Simulate send delay — replace with Formspree/Web3Forms fetch in production */
-    setTimeout(() => {
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+
       form.reset();
-      btn.textContent = "Send Message";
-      btn.disabled = false;
       formSuccess.classList.add("show");
       setTimeout(() => formSuccess.classList.remove("show"), 5000);
-    }, 1200);
+    } catch (error) {
+      console.error("Contact form submit error:", error);
+      alert("There was an error sending your message. Please try again later.");
+    } finally {
+      btn.textContent = "Send Message";
+      btn.disabled = false;
+    }
   });
 }
 
