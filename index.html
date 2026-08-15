@@ -32,14 +32,21 @@
       <nav class="nav" id="navMenu">
         <a href="#about" class="nav-link">About</a>
         <a href="#projects" class="nav-link">Projects</a>
+        <a href="#framework" class="nav-link">Framework</a>
         <a href="#skills" class="nav-link">Skills</a>
+        <a href="#certifications" class="nav-link">Certifications</a>
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
       <div class="header-actions">
-        <a href="assets/resume/Pawan_Funde.pdf" download="Pawan_Funde_Resume.pdf" class="btn btn-sm btn-outline">
-          Resume
+        <button class="btn btn-sm btn-outline open-resume-modal-btn" id="headerResumeBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Preview CV</span>
+        </button>
+
+        <a href="assets/resume/Pawan_Funde.pdf" download="Pawan_Funde_Resume.pdf" class="btn btn-sm btn-ghost header-download-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </a>
 
         <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -70,11 +77,14 @@
 
           <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">View Projects</a>
-            <a href="assets/resume/Pawan_Funde.pdf" download="Pawan_Funde_Resume.pdf" class="btn btn-outline">
+            <button class="btn btn-outline open-resume-modal-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Preview Resume</span>
+            </button>
+            <a href="assets/resume/Pawan_Funde.pdf" download="Pawan_Funde_Resume.pdf" class="btn btn-ghost">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span>Download CV</span>
             </a>
-            <a href="#contact" class="btn btn-ghost">Get in Touch</a>
             <button class="btn btn-ghost copy-email-btn" id="copyEmailBtn" data-email="pawanfunde96@gmail.com">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               <span id="copyEmailText">Copy Email</span>
@@ -95,6 +105,34 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               <span>pawanfunde96@gmail.com</span>
             </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Impact Stats Bar (At-a-Glance Recruiter Proof) -->
+    <section class="stats-strip">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" data-count="500" data-suffix="K+">500K+</div>
+            <div class="stat-label">Security &amp; Auth Logs Analyzed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" data-count="15" data-suffix="+ Units">15+ Units</div>
+            <div class="stat-label">Diagnostic Centers Tracked (@ LabAtHome)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" data-count="5.1" data-prefix="₹" data-suffix="B+">₹5.1B+</div>
+            <div class="stat-label">Retail Gross GMV Modeled (RFM)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" data-count="9.0" data-suffix=" CGPA">9.0 CGPA</div>
+            <div class="stat-label">B.Tech Cyber Security (@ SAKEC)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value highlight-stat">National Finalist</div>
+            <div class="stat-label">DecodeX 2026 Analytics Hackathon</div>
           </div>
         </div>
       </div>
@@ -359,10 +397,105 @@
       </div>
     </section>
 
+    <!-- My Analytics Framework Section (End-to-End Methodology) -->
+    <section id="framework" class="section section-bordered">
+      <div class="container">
+        <div class="section-label">03 / Methodology</div>
+        <h2 class="section-heading">My Analytics Framework</h2>
+        <p class="section-intro">
+          How I bridge the gap between complex raw data and strategic executive decisions. An end-to-end engineered workflow for data integrity, modeling, and business impact.
+        </p>
+
+        <div class="framework-grid">
+          
+          <div class="framework-step">
+            <div class="step-badge">Phase 01</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 class="step-title">Problem Formulation &amp; KPI Scoping</h3>
+            <p class="step-desc">
+              Align with business stakeholders to define core questions, SLA targets, unit economics, and baseline metrics before touching queries.
+            </p>
+            <div class="step-tags">
+              <span class="pill">Business KPIs</span>
+              <span class="pill">Stakeholder SLA</span>
+              <span class="pill">Hypothesis Testing</span>
+            </div>
+          </div>
+
+          <div class="framework-step">
+            <div class="step-badge">Phase 02</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="step-title">Data Extraction &amp; SQL Wrangling</h3>
+            <p class="step-desc">
+              Author optimized SQL queries, CTEs, and window functions to extract, normalize, clean dirty logs, and filter anomalies from multi-source databases.
+            </p>
+            <div class="step-tags">
+              <span class="pill">SQL CTEs</span>
+              <span class="pill">Window Functions</span>
+              <span class="pill">Data Cleaning</span>
+            </div>
+          </div>
+
+          <div class="framework-step">
+            <div class="step-badge">Phase 03</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <h3 class="step-title">Star Schema &amp; Relational Modeling</h3>
+            <p class="step-desc">
+              Architect performant data models with clean Fact and Dimension separation, single-directional 1-to-many cardinality, and integer surrogate keys.
+            </p>
+            <div class="step-tags">
+              <span class="pill">Star Schema</span>
+              <span class="pill">Fact &amp; Dim Tables</span>
+              <span class="pill">Power Query ETL</span>
+            </div>
+          </div>
+
+          <div class="framework-step">
+            <div class="step-badge">Phase 04</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <h3 class="step-title">DAX &amp; Metric Engineering</h3>
+            <p class="step-desc">
+              Construct dynamic DAX calculations, rolling time intelligence measures, cohort quintiles, and multi-variable anomaly scoring metrics.
+            </p>
+            <div class="step-tags">
+              <span class="pill">DAX Measures</span>
+              <span class="pill">Time Intelligence</span>
+              <span class="pill">RFM Scoring</span>
+            </div>
+          </div>
+
+          <div class="framework-step">
+            <div class="step-badge">Phase 05</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <h3 class="step-title">Executive Reporting &amp; Actionable ROI</h3>
+            <p class="step-desc">
+              Design intuitive, distraction-free Power BI dashboards with drill-through telemetry that empower decision-makers to act with clarity.
+            </p>
+            <div class="step-tags">
+              <span class="pill">Executive BI</span>
+              <span class="pill">Drill-Through</span>
+              <span class="pill">Actionable Insights</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Clean Skills Section -->
     <section id="skills" class="section">
       <div class="container">
-        <div class="section-label">03 / Capabilities</div>
+        <div class="section-label">04 / Capabilities</div>
         <h2 class="section-heading">Technical Stack</h2>
 
         <div class="skills-clean-grid">
@@ -417,10 +550,197 @@
       </div>
     </section>
 
-    <!-- Clean Experience Section -->
-    <section id="experience" class="section section-bordered">
+    <!-- Dedicated Certifications & Verification Badges Section -->
+    <section id="certifications" class="section section-bordered">
       <div class="container">
-        <div class="section-label">04 / Experience</div>
+        <div class="section-label">05 / Credentials</div>
+        <h2 class="section-heading">Certifications &amp; Accreditations</h2>
+        <p class="section-intro">
+          Verified academic and professional credentials validating practical competency across Python, SQL, Power BI data modeling, and business problem solving.
+        </p>
+
+        <div class="certs-grid">
+
+          <!-- Cert 1: Career247 Specialization -->
+          <div class="cert-card featured-cert">
+            <div class="cert-card-header">
+              <div class="cert-badge-wrap">
+                <span class="cert-icon-badge">🏆</span>
+                <div>
+                  <span class="cert-issuer">Career247 Professional Accreditation</span>
+                  <h3 class="cert-title">Data Analytics Specialization</h3>
+                </div>
+              </div>
+              <span class="cert-status-tag verified">Verified</span>
+            </div>
+
+            <p class="cert-desc">
+              Comprehensive industry training covering advanced Python for data analysis, complex SQL query architecture, Power BI Star Schema modeling, DAX measure engineering, and executive reporting.
+            </p>
+
+            <div class="cert-meta-row">
+              <div class="cmeta-item">
+                <span class="cmeta-k">Credential ID</span>
+                <span class="cmeta-v font-mono">C2471579</span>
+              </div>
+              <div class="cmeta-item">
+                <span class="cmeta-k">Issued Date</span>
+                <span class="cmeta-v">August 2025</span>
+              </div>
+              <div class="cmeta-item">
+                <span class="cmeta-k">Skills Validated</span>
+                <span class="cmeta-v">Python, SQL, Power BI, DAX</span>
+              </div>
+            </div>
+
+            <div class="cert-card-footer">
+              <div class="tech-stack">
+                <span class="pill">Python</span>
+                <span class="pill">SQL</span>
+                <span class="pill">Power BI</span>
+                <span class="pill">DAX</span>
+                <span class="pill">Data Modeling</span>
+              </div>
+              <a href="https://github.com/pawan3funde" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span>Verify Credential &rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Cert 2: DecodeX Hackathon -->
+          <div class="cert-card">
+            <div class="cert-card-header">
+              <div class="cert-badge-wrap">
+                <span class="cert-icon-badge">⚡</span>
+                <div>
+                  <span class="cert-issuer">N.L. Dalmia Institute (NLD Synapse)</span>
+                  <h3 class="cert-title">DecodeX National Analytics Finalist</h3>
+                </div>
+              </div>
+              <span class="cert-status-tag finalist">National Finalist</span>
+            </div>
+
+            <p class="cert-desc">
+              Recognized as a National Finalist in a competitive 24-hour analytics hackathon. Built automated diagnostic data pipelines and business strategy models for live industry data scenarios.
+            </p>
+
+            <div class="cert-meta-row">
+              <div class="cmeta-item">
+                <span class="cmeta-k">Event</span>
+                <span class="cmeta-v">NLD Synapse 2026</span>
+              </div>
+              <div class="cmeta-item">
+                <span class="cmeta-k">Date</span>
+                <span class="cmeta-v">February 2026</span>
+              </div>
+              <div class="cmeta-item">
+                <span class="cmeta-k">Domain</span>
+                <span class="cmeta-v">Business Problem Solving</span>
+              </div>
+            </div>
+
+            <div class="cert-card-footer">
+              <div class="tech-stack">
+                <span class="pill">Analytics Sprint</span>
+                <span class="pill">Pipeline Design</span>
+                <span class="pill">BI Pitch</span>
+              </div>
+              <a href="#experience" class="btn btn-sm btn-ghost">
+                <span>View Timeline &rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Cert 3: Advanced SQL & Data Architecture -->
+          <div class="cert-card">
+            <div class="cert-card-header">
+              <div class="cert-badge-wrap">
+                <span class="cert-icon-badge">🗄️</span>
+                <div>
+                  <span class="cert-issuer">Technical Assessment &amp; Query Modeling</span>
+                  <h3 class="cert-title">Advanced SQL &amp; Relational Databases</h3>
+                </div>
+              </div>
+              <span class="cert-status-tag verified">Proficiency</span>
+            </div>
+
+            <p class="cert-desc">
+              Demonstrated mastery of CTEs, window functions (RANK, DENSE_RANK, NTILE), complex aggregations, query indexing, and multi-table join optimization across MySQL &amp; PostgreSQL.
+            </p>
+
+            <div class="cert-meta-row">
+              <div class="cmeta-item">
+                <span class="cmeta-k">Focus</span>
+                <span class="cmeta-v">Relational Schema &amp; Optimization</span>
+              </div>
+              <div class="cmeta-item">
+                <span class="cmeta-k">Level</span>
+                <span class="cmeta-v">Advanced Query Engineering</span>
+              </div>
+            </div>
+
+            <div class="cert-card-footer">
+              <div class="tech-stack">
+                <span class="pill">PostgreSQL</span>
+                <span class="pill">MySQL</span>
+                <span class="pill">CTEs</span>
+                <span class="pill">Window Functions</span>
+              </div>
+              <a href="https://github.com/pawan3funde" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+                <span>View SQL Repos &rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Cert 4: Power BI & DAX Architecture -->
+          <div class="cert-card">
+            <div class="cert-card-header">
+              <div class="cert-badge-wrap">
+                <span class="cert-icon-badge">📊</span>
+                <div>
+                  <span class="cert-issuer">Business Intelligence Architecture</span>
+                  <h3 class="cert-title">Power BI &amp; DAX Financial Modeling</h3>
+                </div>
+              </div>
+              <span class="cert-status-tag verified">Proficiency</span>
+            </div>
+
+            <p class="cert-desc">
+              Expertise in designing Star Schemas, Power Query M transformations, dynamic time intelligence measures, and executive KPI reporting decks.
+            </p>
+
+            <div class="cert-meta-row">
+              <div class="cmeta-item">
+                <span class="cmeta-k">Focus</span>
+                <span class="cmeta-v">Executive Dashboards &amp; DAX</span>
+              </div>
+              <div class="cmeta-item">
+                <span class="cmeta-k">Tools</span>
+                <span class="cmeta-v">Power BI Desktop, Power Query, Excel</span>
+              </div>
+            </div>
+
+            <div class="cert-card-footer">
+              <div class="tech-stack">
+                <span class="pill">Power BI</span>
+                <span class="pill">DAX Modeling</span>
+                <span class="pill">Star Schema</span>
+              </div>
+              <a href="#projects" class="btn btn-sm btn-primary">
+                <span>Explore Dashboards &rarr;</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Clean Experience Section -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-label">06 / Experience</div>
         <h2 class="section-heading">Experience &amp; Education</h2>
 
         <div class="timeline-list">
@@ -500,7 +820,7 @@
     <!-- Clean Contact Section -->
     <section id="contact" class="section">
       <div class="container">
-        <div class="section-label">05 / Contact</div>
+        <div class="section-label">07 / Contact</div>
         <h2 class="section-heading">Let's Connect</h2>
         <p class="section-intro">
           I am actively looking for <strong>Data Analyst &amp; BI Developer roles (Batch of 2027)</strong>. 
@@ -565,6 +885,35 @@
       </div>
     </section>
   </main>
+
+  <!-- In-Browser Resume Preview Modal -->
+  <div class="resume-modal-overlay" id="resumeModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resumeModalTitle">
+    <div class="resume-modal-container">
+      <div class="resume-modal-header">
+        <div class="resume-modal-title-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <div>
+            <h3 class="resume-modal-title" id="resumeModalTitle">Pawan Ashok Funde — Data Analyst Resume</h3>
+            <span class="resume-modal-subtitle">B.Tech Cyber Security (2023 – 2027) &bull; BI Developer</span>
+          </div>
+        </div>
+        <div class="resume-modal-actions">
+          <a href="assets/resume/Pawan_Funde.pdf" download="Pawan_Funde_Resume.pdf" class="btn btn-sm btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Download PDF</span>
+          </a>
+          <a href="assets/resume/Pawan_Funde.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <span>Open in New Tab</span>
+          </a>
+          <button class="resume-close-btn" id="resumeCloseBtn" aria-label="Close resume preview">&times;</button>
+        </div>
+      </div>
+      <div class="resume-modal-body">
+        <iframe src="assets/resume/Pawan_Funde.pdf#toolbar=0&navpanes=0" class="resume-iframe" title="Pawan Funde Resume Document"></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- Interactive Case Study & Proof of Work Modal -->
   <div class="modal-overlay" id="caseStudyModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
