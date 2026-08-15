@@ -125,4 +125,138 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, { passive: true });
 
+  /* ── 6. DYNAMIC DATA ANALYTICS BACKGROUND ANIMATION ─────────── */
+  (function initDataAnalyticsBackground() {
+    const canvas = document.getElementById("dataBgCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    let W, H;
+    let nodes = [];
+    let pulses = [];
+    const mouse = { x: null, y: null, radius: 160 };
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", () => {
+      resize();
+      createNodes();
+    }, { passive: true });
+
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }, { passive: true });
+
+    window.addEventListener("mouseleave", () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    class DataNode {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.vy = (Math.random() - 0.5) * 0.35;
+        this.radius = Math.random() * 1.6 + 0.8;
+        this.alpha = Math.random() * 0.4 + 0.15;
+        this.isKeyMetric = Math.random() > 0.88; // occasional key KPI point
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > W) this.vx *= -1;
+        if (this.y < 0 || this.y > H) this.vy *= -1;
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.x -= (dx / dist) * force * 1.2;
+            this.y -= (dy / dist) * force * 1.2;
+          }
+        }
+      }
+      draw(theme) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.isKeyMetric ? this.radius * 1.5 : this.radius, 0, Math.PI * 2);
+        
+        if (theme === "light") {
+          ctx.fillStyle = this.isKeyMetric ? `rgba(2, 132, 199, 0.4)` : `rgba(71, 85, 105, ${this.alpha * 0.5})`;
+        } else {
+          ctx.fillStyle = this.isKeyMetric ? `rgba(56, 189, 248, 0.55)` : `rgba(148, 163, 184, ${this.alpha * 0.45})`;
+        }
+        ctx.fill();
+      }
+    }
+
+    function createNodes() {
+      const count = Math.min(Math.floor((W * H) / 18000), 55);
+      nodes = Array.from({ length: count }, () => new DataNode());
+    }
+    createNodes();
+
+    function drawGrid(theme) {
+      const gridSpacing = 80;
+      const dotAlpha = theme === "light" ? 0.04 : 0.035;
+      const dotColor = theme === "light" ? `rgba(15, 23, 42, ${dotAlpha})` : `rgba(255, 255, 255, ${dotAlpha})`;
+
+      ctx.fillStyle = dotColor;
+      for (let x = 0; x < W; x += gridSpacing) {
+        for (let y = 0; y < H; y += gridSpacing) {
+          ctx.beginPath();
+          ctx.arc(x, y, 0.75, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      const theme = isLight ? "light" : "dark";
+
+      // 1. Draw subtle background coordinate grid
+      drawGrid(theme);
+
+      // 2. Draw correlation edges between close data points
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 125) {
+            const edgeAlpha = (1 - dist / 125) * (isLight ? 0.08 : 0.07);
+            ctx.beginPath();
+            ctx.strokeStyle = isLight ? `rgba(2, 132, 199, ${edgeAlpha})` : `rgba(56, 189, 248, ${edgeAlpha})`;
+            ctx.lineWidth = 0.55;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 3. Update & render data nodes
+      nodes.forEach((node) => {
+        node.update();
+        node.draw(theme);
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
 });

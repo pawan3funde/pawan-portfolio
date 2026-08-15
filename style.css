@@ -74,7 +74,25 @@ body {
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
   transition: background-color var(--transition), color var(--transition);
+}
+
+.data-bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+main, .section, .footer, .header {
+  position: relative;
+  z-index: 1;
 }
 
 ::selection {
