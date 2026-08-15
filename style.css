@@ -40,20 +40,20 @@
 [data-theme="light"] {
   --bg:           #ffffff;
   --bg-subtle:    #f8fafc;
-  --bg-card:      #f4f4f5;
-  --bg-card-hover:#e4e4e7;
+  --bg-card:      #f8fafc;
+  --bg-card-hover:#f1f5f9;
 
-  --border:       #e4e4e7;
-  --border-light: rgba(0, 0, 0, 0.06);
-  --border-hover: #d4d4d8;
+  --border:       #e2e8f0;
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-hover: #cbd5e1;
 
   --text:         #09090b;
-  --text-muted:   #52525b;
-  --text-dim:     #a1a1aa;
+  --text-muted:   #334155;
+  --text-dim:     #475569;
 
   --accent:       #0284c7;
-  --accent-dim:   rgba(2, 132, 199, 0.08);
-  --badge-bg:     #e4e4e7;
+  --accent-dim:   rgba(2, 132, 199, 0.1);
+  --badge-bg:     #f1f5f9;
 }
 
 /* ── 2. BASE & RESET ──────────────────────────────────────────── */
@@ -391,35 +391,45 @@ button, input, textarea {
   color: var(--text);
 }
 
-/* Key Metrics Row */
-.metrics-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-top: 3.5rem;
-  padding: 1.5rem;
-  border-radius: var(--radius-lg);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
+/* Light Theme Contrast Refinements */
+[data-theme="light"] .highlight {
+  color: #475569;
 }
 
-.metric-item {
-  display: flex;
-  flex-direction: column;
+[data-theme="light"] .brand-badge {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #334155;
 }
 
-.metric-val {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.02em;
+[data-theme="light"] .status-pill {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #334155;
 }
 
-.metric-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  margin-top: 2px;
+[data-theme="light"] .spec-k,
+[data-theme="light"] .ph-label,
+[data-theme="light"] .cm-label,
+[data-theme="light"] .entry-date,
+[data-theme="light"] .project-year,
+[data-theme="light"] .section-label {
+  color: #475569;
+  font-weight: 500;
+}
+
+[data-theme="light"] .spec-v,
+[data-theme="light"] .ph-val,
+[data-theme="light"] .profile-name,
+[data-theme="light"] .project-title,
+[data-theme="light"] .entry-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .pill {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #334155;
 }
 
 /* ── 7. ABOUT SECTION ─────────────────────────────────────────── */
