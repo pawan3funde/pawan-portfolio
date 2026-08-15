@@ -31,6 +31,7 @@
 
       <nav class="nav" id="navMenu">
         <a href="#about" class="nav-link">About</a>
+        <a href="#dashboard" class="nav-link">BI Hub</a>
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#framework" class="nav-link">Framework</a>
         <a href="#skills" class="nav-link">Skills</a>
@@ -67,10 +68,14 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#projects" class="btn btn-primary">View Projects</a>
-            <button class="btn btn-outline open-resume-modal-btn">
+            <a href="#dashboard" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+              <span>Explore BI Hub</span>
+            </a>
+            <a href="#projects" class="btn btn-outline">View Projects</a>
+            <button class="btn btn-ghost open-resume-modal-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span>Preview Resume</span>
+              <span>Preview CV</span>
             </button>
             <a href="#contact" class="btn btn-ghost">Get in Touch</a>
           </div>
@@ -188,10 +193,273 @@
       </div>
     </section>
 
+    <!-- Live Stakeholder BI Dashboard Hub -->
+    <section id="dashboard" class="section section-bordered">
+      <div class="container">
+        <div class="section-label">02 / Interactive BI Hub</div>
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-heading">Live Stakeholder BI Hub</h2>
+            <p class="section-intro">
+              Simulated executive Power BI portal. Toggle between stakeholder personas to evaluate quantified business ROI, technical schema modeling, or industry domain telemetry.
+            </p>
+          </div>
+        </div>
+
+        <!-- Stakeholder Perspective Switcher -->
+        <div class="dash-perspective-bar">
+          <span class="dash-perspective-label">Select Perspective:</span>
+          <div class="dash-pill-group">
+            <button class="dash-pill-btn active" data-perspective="executive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>👔 Executive &amp; Recruiter View</span>
+            </button>
+            <button class="dash-pill-btn" data-perspective="technical">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>💻 Technical Lead &amp; Architect</span>
+            </button>
+            <button class="dash-pill-btn" data-perspective="domains">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>🌐 Domain Deep-Dive Slicer</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Dashboard Container -->
+        <div class="dash-hub-container">
+
+          <!-- 1. Executive Perspective Pane -->
+          <div class="dash-pane active" id="pane-executive">
+            <div class="dash-kpi-row">
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Readiness</span>
+                <div class="kpi-num">2027 Batch</div>
+                <div class="kpi-sub">Available for Analyst &amp; BI Roles</div>
+                <span class="kpi-delta positive">● Immediate Placement</span>
+              </div>
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Academic Standing</span>
+                <div class="kpi-num">9.0 / 10</div>
+                <div class="kpi-sub">B.Tech Cyber Security @ SAKEC</div>
+                <span class="kpi-delta positive">&#9650; Top Tier Merit</span>
+              </div>
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Industry Scope</span>
+                <div class="kpi-num">15+ Units</div>
+                <div class="kpi-sub">Diagnostic BI @ LabAtHome</div>
+                <span class="kpi-delta positive">&#9650; Production Pipeline</span>
+              </div>
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Accreditation</span>
+                <div class="kpi-num">GenAI Certified</div>
+                <div class="kpi-sub">Career247 ID: C2471579</div>
+                <span class="kpi-delta positive">&#10003; Verified Credential</span>
+              </div>
+            </div>
+
+            <!-- Executive Business ROI Impact Grid -->
+            <div class="dash-matrix-wrapper">
+              <h3 class="dash-matrix-title">Quantified Business Impact &amp; ROI Delivery</h3>
+              <div class="dash-impact-matrix">
+                <div class="impact-card">
+                  <div class="impact-header">
+                    <span class="impact-domain">Healthcare BI &bull; LabAtHome</span>
+                    <span class="impact-stat">15 Partner Centers</span>
+                  </div>
+                  <h4 class="impact-title">Diagnostic Multi-Unit Revenue &amp; Patient Retention</h4>
+                  <p class="impact-text">Standardized center-wise KPIs and automated chronic care retest queues (HbA1c/Thyroid), improving recurring patient retention.</p>
+                </div>
+
+                <div class="impact-card">
+                  <div class="impact-header">
+                    <span class="impact-domain">Security Analytics &bull; Capstone</span>
+                    <span class="impact-stat">-64% MTTD</span>
+                  </div>
+                  <h4 class="impact-title">Automated Auth Log Threat Surface Platform</h4>
+                  <p class="impact-text">Ingested 500K+ raw logs to isolate 28 suspicious brute-force clusters with dynamic 0-100 DAX risk indexing.</p>
+                </div>
+
+                <div class="impact-card">
+                  <div class="impact-header">
+                    <span class="impact-domain">FinTech &bull; Risk Analytics</span>
+                    <span class="impact-stat">&#8377;28.2L Loss Avoided</span>
+                  </div>
+                  <h4 class="impact-title">UPI Fraud &amp; Nocturnal Velocity Rule Engine</h4>
+                  <p class="impact-text">Analyzed 100,000+ UPI records to pinpoint off-peak micro-fraud bursts and merchant failure correlations.</p>
+                </div>
+
+                <div class="impact-card">
+                  <div class="impact-header">
+                    <span class="impact-domain">Commercial &bull; Retail RFM</span>
+                    <span class="impact-stat">+18.4% AOV Basket</span>
+                  </div>
+                  <h4 class="impact-title">Black Friday Customer Quintile Segmentation</h4>
+                  <p class="impact-text">Modeled ₹5.1B GMV across 6,000+ buyers, converting generic 25% discounts into margin-preserving loyalty credits.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Technical Lead Perspective Pane -->
+          <div class="dash-pane" id="pane-technical">
+            <div class="dash-kpi-row">
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Data Ingestion Scale</span>
+                <div class="kpi-num">600K+</div>
+                <div class="kpi-sub">Combined Production Records</div>
+                <span class="kpi-delta positive">Structured ETL Pipelines</span>
+              </div>
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Data Modeling</span>
+                <div class="kpi-num">Star Schema</div>
+                <div class="kpi-sub">1-to-Many Single Direction Filter</div>
+                <span class="kpi-delta positive">Integer Surrogate Keys</span>
+              </div>
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Querying Depth</span>
+                <div class="kpi-num">Advanced SQL</div>
+                <div class="kpi-sub">CTEs, Windowing, DENSE_RANK</div>
+                <span class="kpi-delta positive">Optimized Aggregations</span>
+              </div>
+              <div class="dash-kpi-tile">
+                <span class="kpi-tag">Business Logic</span>
+                <div class="kpi-num">Custom DAX</div>
+                <div class="kpi-sub">Time Intelligence &amp; Composite Scoring</div>
+                <span class="kpi-delta positive">Sub-second Visual Render</span>
+              </div>
+            </div>
+
+            <!-- Technical Code & Query Switcher -->
+            <div class="tech-code-sandbox">
+              <div class="sandbox-header">
+                <span class="sandbox-title">⚡ Interactive Measure &amp; SQL Query Sandbox</span>
+                <div class="sandbox-tabs">
+                  <button class="sandbox-tab-btn active" data-code-target="code-dax-risk">DAX: Risk Index</button>
+                  <button class="sandbox-tab-btn" data-code-target="code-dax-rfm">DAX: RFM Quintiles</button>
+                  <button class="sandbox-tab-btn" data-code-target="code-sql-fraud">SQL: Window Anomaly</button>
+                  <button class="sandbox-tab-btn" data-code-target="code-sql-rfm">SQL: NTILE Scoring</button>
+                </div>
+              </div>
+
+              <div class="sandbox-body">
+                <div class="code-snippet-pane active" id="code-dax-risk">
+                  <div class="code-box-header">
+                    <span class="code-box-title">Cyber Threat Severity Measure (Power BI DAX)</span>
+                    <button class="copy-code-btn" data-code-id="raw-dax-risk">Copy Measure</button>
+                  </div>
+                  <pre><code id="raw-dax-risk">Dynamic Risk Score = 
+VAR FailedCount = [Total Failed Logins]
+VAR Velocity = [Login Velocity Per Minute]
+VAR IsTorNode = SELECTEDVALUE(Dim_IPAddress[IsTorExitNode], 0)
+VAR BaseScore = 
+    SWITCH(
+        TRUE(),
+        FailedCount > 50 && Velocity > 10, 85,
+        FailedCount > 20, 50,
+        FailedCount > 5, 25,
+        5
+    )
+RETURN
+    MIN(100, BaseScore + (IsTorNode * 15))</code></pre>
+                </div>
+
+                <div class="code-snippet-pane" id="code-dax-rfm">
+                  <div class="code-box-header">
+                    <span class="code-box-title">RFM Quintile Behavioral Segmentation Measure (Power BI DAX)</span>
+                    <button class="copy-code-btn" data-code-id="raw-dax-rfm">Copy Measure</button>
+                  </div>
+                  <pre><code id="raw-dax-rfm">Customer Segment = 
+VAR R_Score = [Recency Score]
+VAR F_Score = [Frequency Score]
+VAR M_Score = [Monetary Score]
+VAR CompositeScore = R_Score * 100 + F_Score * 10 + M_Score
+RETURN
+    SWITCH(
+        TRUE(),
+        R_Score >= 4 && F_Score >= 4 && M_Score >= 4, "Champions (VIP)",
+        R_Score >= 3 && F_Score >= 3 && M_Score >= 3, "Loyal Customers",
+        R_Score >= 4 && F_Score <= 2, "Recent Potential Loyalists",
+        R_Score <= 2 && F_Score >= 3 && M_Score >= 3, "At Risk (Win-Back)",
+        "Standard Customers"
+    )</code></pre>
+                </div>
+
+                <div class="code-snippet-pane" id="code-sql-fraud">
+                  <div class="code-box-header">
+                    <span class="code-box-title">High-Velocity Brute Force &amp; Sliding Window Query (SQL)</span>
+                    <button class="copy-code-btn" data-code-id="raw-sql-fraud">Copy SQL</button>
+                  </div>
+                  <pre><code id="raw-sql-fraud">WITH RankedAttempts AS (
+    SELECT 
+        source_ip,
+        target_username,
+        auth_timestamp,
+        COUNT(*) OVER (
+            PARTITION BY source_ip 
+            ORDER BY auth_timestamp 
+            RANGE BETWEEN INTERVAL '5 MINUTE' PRECEDING AND CURRENT ROW
+        ) AS attempts_in_window
+    FROM fact_auth_logs
+    WHERE auth_timestamp >= NOW() - INTERVAL '24 HOUR'
+)
+SELECT source_ip, MAX(attempts_in_window) AS peak_velocity, 'CRITICAL_ALERT' AS threat_tier
+FROM RankedAttempts
+WHERE attempts_in_window >= 15
+GROUP BY source_ip
+ORDER BY peak_velocity DESC;</code></pre>
+                </div>
+
+                <div class="code-snippet-pane" id="code-sql-rfm">
+                  <div class="code-box-header">
+                    <span class="code-box-title">Customer RFM Quintile NTILE Distribution Query (SQL)</span>
+                    <button class="copy-code-btn" data-code-id="raw-sql-rfm">Copy SQL</button>
+                  </div>
+                  <pre><code id="raw-sql-rfm">WITH CustomerAggregates AS (
+    SELECT 
+        user_id,
+        DATEDIFF(CURRENT_DATE, MAX(purchase_date)) AS recency_days,
+        COUNT(DISTINCT order_id) AS frequency_orders,
+        SUM(purchase_amount) AS monetary_spend
+    FROM fact_retail_sales
+    GROUP BY user_id
+)
+SELECT 
+    user_id,
+    NTILE(5) OVER (ORDER BY recency_days DESC) AS r_quintile,
+    NTILE(5) OVER (ORDER BY frequency_orders ASC) AS f_quintile,
+    NTILE(5) OVER (ORDER BY monetary_spend ASC) AS m_quintile
+FROM CustomerAggregates;</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Domain Deep-Dive Perspective Pane -->
+          <div class="dash-pane" id="pane-domains">
+            <div class="domain-slicer-strip">
+              <span class="slicer-label">Filter Industry Domain:</span>
+              <div class="slicer-pills">
+                <button class="slicer-pill active" data-domain="labathome">🏥 Healthcare Diagnostic BI</button>
+                <button class="slicer-pill" data-domain="cyber">🛡️ Cyber Threat Telemetry</button>
+                <button class="slicer-pill" data-domain="upi">💳 FinTech UPI Fraud</button>
+                <button class="slicer-pill" data-domain="retail">🛒 Black Friday RFM</button>
+                <button class="slicer-pill" data-domain="shopease">📦 ShopEase Multi-Store</button>
+              </div>
+            </div>
+
+            <div class="domain-display-card" id="domainDisplayCard">
+              <!-- Dynamically populated by JavaScript -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Clean Projects Section -->
     <section id="projects" class="section section-bordered">
       <div class="container">
-        <div class="section-label">02 / Selected Work</div>
+        <div class="section-label">03 / Selected Work</div>
         <h2 class="section-heading">Projects &amp; Case Studies</h2>
         
         <div class="projects-list">
@@ -389,7 +657,7 @@
     <!-- My Analytics Framework Section (End-to-End Methodology) -->
     <section id="framework" class="section section-bordered">
       <div class="container">
-        <div class="section-label">03 / Methodology</div>
+        <div class="section-label">04 / Methodology</div>
         <h2 class="section-heading">My Analytics Framework</h2>
         <p class="section-intro">
           How I bridge the gap between complex raw data and strategic executive decisions. An end-to-end engineered workflow for data integrity, modeling, and business impact.
@@ -484,7 +752,7 @@
     <!-- Clean Skills Section -->
     <section id="skills" class="section">
       <div class="container">
-        <div class="section-label">04 / Capabilities</div>
+        <div class="section-label">05 / Capabilities</div>
         <h2 class="section-heading">Technical Stack</h2>
 
         <div class="skills-clean-grid">
@@ -542,7 +810,7 @@
     <!-- Dedicated Certifications & Verification Badges Section -->
     <section id="certifications" class="section section-bordered">
       <div class="container">
-        <div class="section-label">05 / Credentials</div>
+        <div class="section-label">06 / Credentials</div>
         <h2 class="section-heading">Certifications &amp; Accreditations</h2>
         <p class="section-intro">
           Verified academic and professional credentials validating practical competency across Python, SQL, Power BI data modeling, and business problem solving.
@@ -730,7 +998,7 @@
     <!-- Clean Experience Section -->
     <section id="experience" class="section">
       <div class="container">
-        <div class="section-label">06 / Experience</div>
+        <div class="section-label">07 / Experience</div>
         <h2 class="section-heading">Experience &amp; Education</h2>
 
         <div class="timeline-list">
@@ -810,7 +1078,7 @@
     <!-- Clean Contact Section -->
     <section id="contact" class="section">
       <div class="container">
-        <div class="section-label">07 / Contact</div>
+        <div class="section-label">08 / Contact</div>
         <h2 class="section-heading">Let's Connect</h2>
         <p class="section-intro">
           I am actively looking for <strong>Data Analyst &amp; BI Developer roles (Batch of 2027)</strong>. 

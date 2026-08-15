@@ -1061,5 +1061,172 @@ ORDER BY return_rate_pct DESC;`
     statElements.forEach(el => statsObserver.observe(el));
   }
 
+  /* ── 9. LIVE STAKEHOLDER BI HUB CONTROLLER ───────────────────── */
+  // 1. Perspective Switcher
+  const perspectiveBtns = document.querySelectorAll(".dash-pill-btn[data-perspective]");
+  const dashPanes = document.querySelectorAll(".dash-pane");
+
+  perspectiveBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      perspectiveBtns.forEach(b => b.classList.remove("active"));
+      dashPanes.forEach(p => p.classList.remove("active"));
+
+      btn.classList.add("active");
+      const targetId = `pane-${btn.getAttribute("data-perspective")}`;
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) {
+        targetPane.classList.add("active");
+      }
+    });
+  });
+
+  // 2. Technical Measure/SQL Sandbox Tabs
+  const sandboxTabBtns = document.querySelectorAll(".sandbox-tab-btn[data-code-target]");
+  const codePanes = document.querySelectorAll(".code-snippet-pane");
+
+  sandboxTabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      sandboxTabBtns.forEach(b => b.classList.remove("active"));
+      codePanes.forEach(p => p.classList.remove("active"));
+
+      btn.classList.add("active");
+      const targetId = btn.getAttribute("data-code-target");
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) {
+        targetPane.classList.add("active");
+      }
+    });
+  });
+
+  // 3. Sandbox Code Copy Button
+  document.querySelectorAll(".copy-code-btn[data-code-id]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const codeEl = document.getElementById(btn.getAttribute("data-code-id"));
+      if (codeEl) {
+        navigator.clipboard.writeText(codeEl.textContent).then(() => {
+          const originalText = btn.textContent;
+          btn.textContent = "Copied!";
+          btn.style.color = "var(--success)";
+          btn.style.borderColor = "var(--success)";
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.color = "";
+            btn.style.borderColor = "";
+          }, 2000);
+        });
+      }
+    });
+  });
+
+  // 4. Domain Slicer Interactive Dataset Controller
+  const domainData = {
+    labathome: {
+      badge: "Healthcare BI &bull; Diagnostic Enterprise",
+      title: "LabAtHome Multi-Unit BI & Chronic Care Retention Pipeline",
+      narrative: "Engineered an end-to-end diagnostic analytics model tracking operational KPIs across 15+ partner collection centers. Built automated chronic care patient retention queues (HbA1c & Thyroid retests), eliminating operational blind spots.",
+      datasetSize: "15+ Centers / Live Patient Data",
+      coreMetric: "Automated Chronic Retest Pipeline",
+      techStack: "Power BI, Star Schema, SQL, DAX, Excel",
+      projectId: "cyber-threat" // fallback or link
+    },
+    cyber: {
+      badge: "Security Telemetry &bull; Capstone Platform",
+      title: "Cyber Threat Intelligence & Auth Log Anomaly Detection",
+      narrative: "Ingested 500,000+ heterogeneous server authentication records to isolate 28 brute-force and port-scan attack clusters. Designed real-time dynamic 0-100 severity index metrics in Power BI, slashing Mean Time to Detect (MTTD) by 64%.",
+      datasetSize: "500,000+ Raw Log Events",
+      coreMetric: "-64% Mean Time to Detect (MTTD)",
+      techStack: "Power BI, Python, Pandas, SQL CTEs, Star Schema",
+      projectId: "cyber-threat"
+    },
+    upi: {
+      badge: "FinTech &bull; Risk Intelligence",
+      title: "UPI Transaction Risk & High-Velocity Fraud Detection",
+      narrative: "Analyzed 100,000+ synthetic digital transactions to identify nocturnal micro-fraud velocity bursts and merchant category vulnerabilities, modeling an estimated ₹28.2 Lakhs in avoided chargeback loss.",
+      datasetSize: "100,000+ Financial Records",
+      coreMetric: "₹28.2 Lakhs Fraud Loss Prevented",
+      techStack: "SQL Window Functions, Power BI, Python, DAX",
+      projectId: "upi-fraud"
+    },
+    retail: {
+      badge: "Commercial Retail &bull; RFM Analytics",
+      title: "Black Friday Sales & Customer Quintile Segmentation",
+      narrative: "Modeled ₹5.1 Billion in Gross Merchandise Volume (GMV) across 6,000+ buyers using NTILE SQL and dynamic DAX clustering. Converted generic 25% discount campaigns into VIP retention credits, lifting Average Order Value (AOV) by +18.4%.",
+      datasetSize: "₹5.1B GMV / 6,000+ Customers",
+      coreMetric: "+18.4% Average Order Value (AOV)",
+      techStack: "Power BI, DAX Clustering, SQL NTILE, Python",
+      projectId: "black-friday"
+    },
+    shopease: {
+      badge: "E-Commerce &bull; Multi-Store Operations",
+      title: "ShopEase Multi-Store Sales Performance & Return Analytics",
+      narrative: "Consolidated dirty transactional records across disparate retail branch locations into a 3NF relational schema. Visualized net revenue vs refund rates to isolate vendor-specific supply defects and geographic demand variance.",
+      datasetSize: "50,000+ Order Items",
+      coreMetric: "Multi-Store Unit Margin Tracking",
+      techStack: "MySQL, Relational Joins, Power BI, Excel ETL",
+      projectId: "shopease"
+    }
+  };
+
+  const domainDisplayCard = document.getElementById("domainDisplayCard");
+  const slicerPills = document.querySelectorAll(".slicer-pill[data-domain]");
+
+  function renderDomainView(domainKey) {
+    const item = domainData[domainKey];
+    if (!item || !domainDisplayCard) return;
+
+    domainDisplayCard.innerHTML = `
+      <div class="domain-hero-grid">
+        <div class="domain-hero-main">
+          <span class="domain-spec-badge">${item.badge}</span>
+          <h3 class="domain-big-title">${item.title}</h3>
+          <p class="domain-narrative">${item.narrative}</p>
+        </div>
+        <div class="domain-stats-col">
+          <div>
+            <div class="dstat-k">Ingested Scale</div>
+            <div class="dstat-v">${item.datasetSize}</div>
+          </div>
+          <div>
+            <div class="dstat-k">Quantified Outcome</div>
+            <div class="dstat-v" style="color: var(--accent);">${item.coreMetric}</div>
+          </div>
+          <div>
+            <div class="dstat-k">Engineering Stack</div>
+            <div class="dstat-v">${item.techStack}</div>
+          </div>
+        </div>
+      </div>
+      <div class="domain-btn-row">
+        <div class="tech-stack">
+          ${item.techStack.split(', ').map(t => `<span class="pill">${t}</span>`).join('')}
+        </div>
+        <button class="btn btn-sm btn-primary open-case-study-btn" data-project="${item.projectId}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Launch Full Case Study &rarr;</span>
+        </button>
+      </div>
+    `;
+
+    // Re-bind click event on the newly rendered button
+    const newBtn = domainDisplayCard.querySelector(".open-case-study-btn");
+    if (newBtn && typeof openModal === "function") {
+      newBtn.addEventListener("click", () => {
+        openModal(newBtn.getAttribute("data-project"));
+      });
+    }
+  }
+
+  slicerPills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      slicerPills.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      renderDomainView(pill.getAttribute("data-domain"));
+    });
+  });
+
+  // Initial render of default domain
+  renderDomainView("labathome");
+
 });
+
 
