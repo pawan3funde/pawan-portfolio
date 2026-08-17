@@ -95,27 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ── 4. SCROLL ACTIVE LINK TRACKING ──────────────────────────── */
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  window.addEventListener("scroll", () => {
-    let current = "";
-    const scrollY = window.scrollY;
-
-    sections.forEach((sec) => {
-      const top = sec.offsetTop - 100;
-      const height = sec.offsetHeight;
-      if (scrollY >= top && scrollY < top + height) {
-        current = sec.getAttribute("id");
-      }
-    });
-
-    navLinks.forEach((link) => {
-      link.classList.toggle("active", link.getAttribute("href") === `#${current}`);
-    });
-  }, { passive: true });
-
   /* ── 5. DYNAMIC DATA ANALYTICS BACKGROUND ENGINE ─────────────── */
   (function initDataAnalyticsEngine() {
     const canvas = document.getElementById("dataBgCanvas");
@@ -1062,6 +1041,14 @@ FROM CustomerAggregates;`
 
     sections.forEach(sec => sectionObserver.observe(sec));
 
+    // Immediate check for elements in viewport on load
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        sec.classList.add("section-visible");
+      }
+    });
+
     // Dynamic Navigation Scroll Spy
     const navSpyObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1088,6 +1075,16 @@ FROM CustomerAggregates;`
     // Fallback if IntersectionObserver is unsupported
     sections.forEach(sec => sec.classList.add("section-visible"));
   }
+
+  // Backup reveal to guarantee content is never hidden
+  setTimeout(() => {
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 1.5) {
+        sec.classList.add("section-visible");
+      }
+    });
+  }, 100);
 
 });
 
