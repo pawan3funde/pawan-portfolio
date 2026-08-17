@@ -631,6 +631,7 @@ button, input, textarea {
 .badge-accent  { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
 .badge-neutral { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
 .badge-intern  { background: rgba(34, 197, 94, 0.1); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.3); }
+.badge-gold    { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.4); }
 
 .entry-title {
   font-size: 1.05rem;
@@ -1589,6 +1590,17 @@ button, input, textarea {
   background: linear-gradient(180deg, rgba(56, 189, 248, 0.04) 0%, var(--bg-card) 100%);
 }
 
+.cert-card.gold-cert {
+  border-color: rgba(234, 179, 8, 0.4);
+  background: linear-gradient(180deg, rgba(234, 179, 8, 0.06) 0%, var(--bg-card) 100%);
+  box-shadow: 0 4px 20px -8px rgba(234, 179, 8, 0.15);
+}
+
+.cert-card.gold-cert:hover {
+  border-color: rgba(234, 179, 8, 0.7);
+  box-shadow: 0 8px 30px -8px rgba(234, 179, 8, 0.25);
+}
+
 .cert-card-header {
   display: flex;
   justify-content: space-between;
@@ -1642,6 +1654,12 @@ button, input, textarea {
   background: var(--accent-dim);
   color: var(--accent);
   border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.cert-status-tag.gold {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+  border: 1px solid rgba(250, 204, 21, 0.45);
 }
 
 .cert-desc {
