@@ -104,13 +104,111 @@ button, input, textarea {
   padding: 0 1.5rem;
 }
 
-.section {
+/* Dynamic Section Scroll Transitions */
+.section, .stats-strip {
   padding: 5rem 0;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  position: relative;
 }
 
+.stats-strip {
+  padding: 1.5rem 0;
+}
+
+/* Hero is always visible; Sections become visible via observer */
+.hero,
+.section.section-visible,
+.stats-strip.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dynamic Glowing Section Boundary Transitions */
 .section-bordered {
+  position: relative;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+}
+
+.section-bordered::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(56, 189, 248, 0.05) 15%, 
+    rgba(56, 189, 248, 0.65) 50%, 
+    rgba(129, 140, 248, 0.5) 65%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: scaleX(0.3);
+  transition: opacity 0.9s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.section-bordered.section-visible::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Staggered Item Animations within visible sections */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.section-visible .stagger-item,
+.hero .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-visible .stagger-item:nth-child(1) { transition-delay: 0.04s; }
+.section-visible .stagger-item:nth-child(2) { transition-delay: 0.10s; }
+.section-visible .stagger-item:nth-child(3) { transition-delay: 0.16s; }
+.section-visible .stagger-item:nth-child(4) { transition-delay: 0.22s; }
+.section-visible .stagger-item:nth-child(5) { transition-delay: 0.28s; }
+.section-visible .stagger-item:nth-child(6) { transition-delay: 0.34s; }
+.section-visible .stagger-item:nth-child(7) { transition-delay: 0.40s; }
+.section-visible .stagger-item:nth-child(8) { transition-delay: 0.46s; }
+
+/* Subtle Section Ambient Depth Glow */
+.section::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 650px;
+  height: 250px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.035) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  z-index: -1;
+}
+
+.section.section-visible::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section, .stats-strip, .stagger-item, .section-bordered::before {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 .section-label {
@@ -151,6 +249,27 @@ button, input, textarea {
   border-bottom: 1px solid var(--border-light);
   z-index: 100;
   transition: background var(--transition);
+}
+
+/* Dynamic Scroll Progress Bar */
+.scroll-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #818cf8, #a855f7, #38bdf8);
+  background-size: 200% 100%;
+  animation: progressGlow 4s linear infinite;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 4px rgba(129, 140, 248, 0.6);
+  z-index: 105;
+  pointer-events: none;
+  transition: width 0.1s cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes progressGlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 [data-theme="light"] .header {
@@ -195,11 +314,30 @@ button, input, textarea {
 .nav-link {
   font-size: 0.85rem;
   color: var(--text-muted);
-  transition: color var(--transition);
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.25s ease;
 }
 
 .nav-link:hover {
   color: var(--text);
+}
+
+.nav-link.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
 }
 
 .header-actions {

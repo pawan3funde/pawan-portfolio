@@ -1019,5 +1019,75 @@ FROM CustomerAggregates;`
     statElements.forEach(el => statsObserver.observe(el));
   }
 
+  /* ── 9. DYNAMIC SECTION SCROLL TRANSITIONS & SCROLL SPY ───────── */
+  const scrollProgressBar = document.getElementById("scrollProgressBar");
+  const sections = document.querySelectorAll("section, .stats-strip");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  // Automatically tag child elements with stagger-item for smooth cascading micro-transitions
+  document.querySelectorAll(".projects-list > .project-item, .certs-grid > .cert-card, .framework-grid > .framework-step, .skills-clean-grid > .skill-category, .timeline-list > .timeline-entry, .stats-grid > .stat-card").forEach(el => {
+    el.classList.add("stagger-item");
+  });
+
+  // Ensure hero section is visible immediately
+  const heroSection = document.getElementById("hero");
+  if (heroSection) {
+    heroSection.classList.add("section-visible");
+  }
+
+  // Real-time Scroll Progress Bar
+  function updateScrollProgress() {
+    if (!scrollProgressBar) return;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgressBar.style.width = `${scrollPercent}%`;
+  }
+
+  window.addEventListener("scroll", updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // Dynamic Section Scroll Reveal Observer
+  if ("IntersectionObserver" in window) {
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("section-visible");
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: "0px 0px -40px 0px"
+    });
+
+    sections.forEach(sec => sectionObserver.observe(sec));
+
+    // Dynamic Navigation Scroll Spy
+    const navSpyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("id");
+          if (id) {
+            navLinks.forEach(link => {
+              if (link.getAttribute("href") === `#${id}`) {
+                link.classList.add("active");
+              } else {
+                link.classList.remove("active");
+              }
+            });
+          }
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: "-20% 0px -50% 0px"
+    });
+
+    document.querySelectorAll("section[id]").forEach(sec => navSpyObserver.observe(sec));
+  } else {
+    // Fallback if IntersectionObserver is unsupported
+    sections.forEach(sec => sec.classList.add("section-visible"));
+  }
+
 });
 
