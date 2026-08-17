@@ -5,7 +5,7 @@ A cutting-edge, cyber-data dark themed personal portfolio website built with HTM
 ## 🚀 Key Highlights & Sections
 - **Hero & Live Node Canvas**: Real-time particle connection mesh with dynamic typing animation and one-click CV download.
 - **Impact Metrics Counter**: 100K+ records analyzed, ₹5.1B+ commercial sales modeled, 8.1 B.Tech CGPA, DecodeX Hackathon Finalist.
-- **B.Tech Capstone Project Showcase**: Spotlight on *Cyber Threat Intelligence & Anomaly Analytics Platform*.
+- **Featured Project Showcases**: Spotlight on *Production-Grade Advanced RAG System (LangGraph, Qdrant, RAGAS)*, *UPI Transaction Fraud & Risk Analytics*, and *Black Friday Sales & RFM Segmentation*.
 - **Interactive Skills Matrix**: Filterable across BI, SQL & Programming, Analytics, and Workflow Tools.
 - **Live BI Dashboard Simulator**: Real-time KPI aggregator and interactive data chart simulator embedded right on the page.
 - **Case Study Modals**: Deep-dive breakdowns of business problems, data architecture, DAX measures, and measurable business outcomes.

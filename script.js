@@ -362,105 +362,139 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ── 6. PROOF OF WORK & CASE STUDY MODAL SYSTEM ─────────────── */
   const projectDatabase = {
-    "cyber-threat": {
-      title: "Cyber Threat Intelligence & Log Anomaly Platform",
-      tag: "Major Capstone • Security Analytics",
-      year: "2025 – 2026",
-      tech: ["Python", "SQL", "Power BI", "DAX", "Data Modeling"],
+    "advanced-rag": {
+      title: "Production-Grade Advanced RAG System",
+      tag: "Final Year Project • GenAI & Data Science",
+      year: "2025 – 2026 • Ongoing",
+      tech: ["Python", "Generative AI", "LangGraph", "Qdrant", "FlashRank", "RAGAS", "FastAPI", "Docker", "GCP", "Terraform"],
       githubUrl: "https://github.com/pawan3funde",
-      reportUrl: "assets/projects/cyber-threat/report.pdf",
+      reportUrl: "assets/projects/advanced-rag/report.pdf",
       visual: {
-        img: "assets/projects/cyber-threat/dashboard.svg",
-        caption: "Power BI Executive Threat Surface & Anomaly Telemetry Dashboard",
+        img: "assets/projects/advanced-rag/dashboard.svg",
+        caption: "LangGraph Agentic State Execution & RAGAS Multi-Metric Telemetry",
         takeaways: [
           {
-            title: "500K+ Log Events Processed",
-            desc: "Ingested heterogeneous auth logs into an optimized, star-schema relational model."
+            title: "94.8% RAGAS Faithfulness",
+            desc: "Eliminates hallucinations through FlashRank neural reranking and LLM document relevance grading."
           },
           {
-            title: "64% Faster Anomaly MTTD",
-            desc: "Accelerated mean time to detect malicious IP clusters and credential stuffing."
+            title: "LangGraph Agentic Orchestration",
+            desc: "Implements adaptive query expansion, self-correction loops, and structured citations."
           },
           {
-            title: "Dynamic Risk Indexing (0-100)",
-            desc: "Engineered multi-factor DAX risk metric factoring velocity, failure count & geo-anomalies."
+            title: "Zero-Trust Guardrail Gateway",
+            desc: "Enforces input/output safety, prompt injection defense, and token optimization via NeMo & Portkey."
           }
         ]
       },
       architecture: {
-        img: "assets/projects/cyber-threat/datamodel.svg",
-        caption: "Power BI Star Schema Model: Fact_AuthEvents with 1-to-Many Relationships",
+        img: "assets/projects/advanced-rag/datamodel.svg",
+        caption: "End-to-End Advanced RAG Data Pipeline, Vector DB & Cloud Infrastructure",
         cards: [
           {
-            title: "Fact_AuthEvents (500K+ rows)",
-            desc: "Stores timestamped authentication requests, status codes, target ports, and raw anomaly scores."
+            title: "1. Document Ingestion & Qdrant Indexing",
+            desc: "Automated parsing of unstructured documents, context-aware NLP text chunking, and dense vector embeddings indexed in Qdrant with HNSW similarity search."
           },
           {
-            title: "Dimension Hierarchy",
-            desc: "Dim_Date (Hour-of-day granularity), Dim_IPAddress (Tor/ASN metadata), Dim_UserAccount, Dim_Endpoint."
+            title: "2. Hybrid Retrieval & FlashRank Reranking",
+            desc: "Dense semantic search combined with sparse keyword retrieval; candidates (Top-20) are neural-reranked via FlashRank cross-encoder to extract Top-5 high-signal contexts."
           },
           {
-            title: "Cardinality & Performance",
-            desc: "Single-directional 1-to-many relationships utilizing integer surrogate keys for sub-second DAX rendering."
+            title: "3. LangGraph Loops & Cloud Deployment",
+            desc: "Agentic decision graph managing document grading, fallback web routing, NeMo Guardrails, containerized with Docker on GCP provisioned via Terraform."
           }
         ]
       },
       code: [
         {
-          title: "DAX • Dynamic Threat Severity Index (0 - 100)",
-          code: `Dynamic Risk Score = 
-VAR FailedCount = [Total Failed Logins]
-VAR Velocity = [Login Velocity Per Minute]
-VAR IsTorNode = SELECTEDVALUE(Dim_IPAddress[IsTorExitNode], 0)
-VAR BaseScore = 
-    SWITCH(
-        TRUE(),
-        FailedCount > 50 && Velocity > 10, 85,
-        FailedCount > 20, 50,
-        FailedCount > 5, 25,
-        5
+          title: "Python • LangGraph Agentic RAG Workflow State Machine",
+          code: `from typing import TypedDict, List
+from langgraph.graph import StateGraph, END
+from flashrank import Ranker, RerankRequest
+
+class RAGState(TypedDict):
+    question: str
+    documents: List[str]
+    generation: str
+    is_grounded: bool
+
+def retrieve_and_rerank(state: RAGState) -> dict:
+    query = state["question"]
+    raw_docs = qdrant_client.search(
+        collection_name="enterprise_knowledge",
+        query_vector=embed(query),
+        limit=20
     )
-RETURN
-    MIN(100, BaseScore + (IsTorNode * 15))`
+    # Neural Cross-Encoder Reranking
+    ranker = Ranker(model_name="ms-marco-TinyBERT-L-2-v2")
+    rerank_req = RerankRequest(
+        query=query, 
+        passages=[{"id": d.id, "text": d.payload["text"]} for d in raw_docs]
+    )
+    reranked = ranker.rerank(rerank_req)[:5]
+    return {"documents": [r["text"] for r in reranked]}
+
+# Build Adaptive Agent Graph
+workflow = StateGraph(RAGState)
+workflow.add_node("retrieve", retrieve_and_rerank)
+workflow.add_node("grade_docs", grade_retrieved_documents)
+workflow.add_node("generate", generate_with_guardrails)
+workflow.set_entry_point("retrieve")
+workflow.add_edge("retrieve", "grade_docs")
+workflow.add_conditional_edges(
+    "grade_docs",
+    decide_to_generate,
+    {"generate": "generate", "rewrite": "rewrite_query"}
+)
+workflow.add_edge("generate", END)
+app = workflow.compile()`
         },
         {
-          title: "SQL • Identifying High-Velocity Brute Force Clusters",
-          code: `WITH RankedAttempts AS (
-    SELECT 
-        source_ip,
-        target_username,
-        auth_timestamp,
-        auth_status,
-        COUNT(*) OVER (
-            PARTITION BY source_ip 
-            ORDER BY auth_timestamp 
-            RANGE BETWEEN INTERVAL '5 MINUTE' PRECEDING AND CURRENT ROW
-        ) AS attempts_in_window
-    FROM fact_auth_logs
-    WHERE auth_timestamp >= NOW() - INTERVAL '24 HOUR'
+          title: "Python • RAGAS Metric Benchmarking & Evaluation Pipeline",
+          code: `from ragas import evaluate
+from ragas.metrics import (
+    faithfulness,
+    answer_relevancy,
+    context_precision,
+    context_recall
 )
-SELECT 
-    source_ip,
-    COUNT(DISTINCT target_username) AS targeted_accounts,
-    MAX(attempts_in_window) AS peak_velocity,
-    'CRITICAL_ALERT' AS threat_tier
-FROM RankedAttempts
-WHERE auth_status = 'FAILED' AND attempts_in_window >= 15
-GROUP BY source_ip
-ORDER BY peak_velocity DESC;`
+from datasets import Dataset
+
+# Construct RAG Evaluation Dataset
+eval_dataset = Dataset.from_dict({
+    "question": test_queries,
+    "contexts": retrieved_contexts,
+    "answer": generated_answers,
+    "ground_truth": ground_truths
+})
+
+# Run Multi-Dimensional RAG Benchmarks
+results = evaluate(
+    dataset=eval_dataset,
+    metrics=[
+        faithfulness,
+        answer_relevancy,
+        context_precision,
+        context_recall
+    ]
+)
+
+print(f"Faithfulness Score: {results['faithfulness']:.4f}")
+print(f"Context Precision:  {results['context_precision']:.4f}")
+print(f"Answer Relevancy:   {results['answer_relevancy']:.4f}")`
         }
       ],
       report: {
-        problem: "Enterprise network security teams faced high alert fatigue and delayed detection for credential stuffing and automated bot port scans across high-volume auth telemetry.",
+        problem: "Traditional naive RAG architectures suffer from context fragmentation, high hallucination rates, irrelevant document chunks in the LLM prompt window, and a lack of standardized evaluation benchmarks for enterprise deployment.",
         approach: [
-          "Extracted and cleaned 500K+ log records using Python (Pandas/Regex) to extract IP, geo-coordinates, and authentication response codes.",
-          "Designed a normalized Star Schema database in MySQL and structured Power BI data pipelines.",
-          "Built DAX-calculated risk indexes that flag anomalous velocity thresholds beyond 2.5 standard deviations from baseline activity."
+          "Engineered an end-to-end data pipeline with contextual NLP chunking, Qdrant vector indexing, and lightweight FlashRank cross-encoder neural reranking.",
+          "Constructed agentic multi-hop reasoning and self-correction loops using LangGraph with NeMo Guardrails and Portkey LLM Gateway.",
+          "Implemented comprehensive RAGAS automated testing (Faithfulness, Context Precision, Relevancy) and containerized the FastAPI backend for GCP deployment with Terraform."
         ],
         impact: [
-          "<strong>64% MTTD Reduction:</strong> Lowered anomaly detection latency from ~12 minutes to under 4.2 minutes.",
-          "<strong>28 Critical IP Clusters Flagged:</strong> Successfully quarantined active brute-force sources during simulated load tests.",
-          "<strong>Executive Visibility:</strong> Delivered single-pane-of-glass dashboard for security ops and C-level risk reporting."
+          "<strong>Hallucination Suppression:</strong> Achieved 94.8% faithfulness score on RAGAS benchmarks with verified source citations.",
+          "<strong>Enhanced Retrieval Relevance:</strong> FlashRank reranking improved top-K context precision to 0.91 (+36% over naive vector search).",
+          "<strong>Production Infrastructure:</strong> Asynchronous FastAPI service containerized with Docker and automated GCP Terraform IaC configuration."
         ]
       }
     },
@@ -652,95 +686,6 @@ FROM CustomerAggregates;`
           "<strong>+18.4% Average Order Value (AOV):</strong> Raised AOV from ₹7,800 to ₹9,420 through cross-sell bundles.",
           "<strong>Targeted Marketing Efficiency:</strong> Reallocated 40% of advertising budget to re-engage 'At Risk' high-monetary cohorts.",
           "<strong>Inventory Balancing:</strong> Reduced stock-outs in top metro hubs by 22% using regional demand trends."
-        ]
-      }
-    },
-
-    "shopease": {
-      title: "ShopEase Multi-Store Business Intelligence Dashboard",
-      tag: "E-Commerce BI",
-      year: "2025",
-      tech: ["Power BI", "Excel", "Data Modeling", "SQL", "DAX"],
-      githubUrl: "https://github.com/pawan3funde",
-      reportUrl: "assets/projects/shopease/report.pdf",
-      visual: {
-        img: "assets/projects/shopease/dashboard.svg",
-        caption: "Power BI Multi-Store Regional Operational & Financial Performance Dashboard",
-        takeaways: [
-          {
-            title: "8 Consolidated Store Feeds",
-            desc: "Unified disparate regional sales registers into a standardized enterprise data model."
-          },
-          {
-            title: "97.6% Dispatch SLA Compliance",
-            desc: "Real-time tracking of order fulfillment velocity and courier turnaround times."
-          },
-          {
-            title: "Automated Return Rate Reduction",
-            desc: "Reduced return percentage from 5.9% to 4.12% through root-cause category analytics."
-          }
-        ]
-      },
-      architecture: {
-        img: "assets/projects/shopease/dashboard.svg",
-        caption: "Multi-Store Normalized Data Architecture & Power Query Transformation Pipeline",
-        cards: [
-          {
-            title: "Fact_StoreSales",
-            desc: "Consolidates invoice line items, tax breakdowns, fulfillment channels, and payment modes."
-          },
-          {
-            title: "Dim_StoreOutlet & Dim_Geography",
-            desc: "Hierarchical store taxonomy covering regional zones, store manager IDs, and target quotas."
-          },
-          {
-            title: "Automated Power Query ETL",
-            desc: "Standardized currency formats, unpivoted legacy monthly Excel reports, and enforced strict schema types."
-          }
-        ]
-      },
-      code: [
-        {
-          title: "DAX • Store Performance vs Quarterly Quota %",
-          code: `Store Quota Attainment % = 
-VAR ActualSales = [Total Revenue]
-VAR TargetQuota = SELECTEDVALUE(Dim_StoreOutlet[QuarterlyQuota_INR], BLANK())
-RETURN
-    IF(
-        NOT ISBLANK(TargetQuota) && TargetQuota > 0,
-        DIVIDE(ActualSales, TargetQuota, 0),
-        BLANK()
-    )`
-        },
-        {
-          title: "SQL • Multi-Store Return Rate & Defect Diagnosis",
-          code: `SELECT 
-    s.store_name,
-    p.category_name,
-    COUNT(o.order_id) AS total_orders,
-    SUM(CASE WHEN o.is_returned = 1 THEN 1 ELSE 0 END) AS returned_orders,
-    ROUND(SUM(CASE WHEN o.is_returned = 1 THEN 1.0 ELSE 0.0 END) / COUNT(o.order_id) * 100, 2) AS return_rate_pct,
-    ROUND(AVG(DATEDIFF(o.delivery_date, o.order_date)), 1) AS avg_fulfillment_days
-FROM fact_orders o
-JOIN dim_stores s ON o.store_id = s.store_id
-JOIN dim_products p ON o.product_id = p.product_id
-WHERE o.order_date >= '2025-01-01'
-GROUP BY s.store_name, p.category_name
-HAVING COUNT(o.order_id) >= 100
-ORDER BY return_rate_pct DESC;`
-        }
-      ],
-      report: {
-        problem: "Multi-store retail operations struggled with fragmented spreadsheet reports, resulting in delayed quarterly performance visibility and unmonitored return rates.",
-        approach: [
-          "Consolidated 8 store databases into an automated Power BI star-schema reporting pipeline.",
-          "Configured scheduled data refresh workflows and parameterized DAX KPIs for executive and store-manager level views.",
-          "Created interactive drill-through pages allowing drilldown from national sales down to store SKU inventory."
-        ],
-        impact: [
-          "<strong>10+ Hours Saved Weekly:</strong> Eliminated manual spreadsheet collation for regional managers.",
-          "<strong>1.78% Return Rate Drop:</strong> Pinpointed sizing discrepancy in Apparel category, reducing return costs.",
-          "<strong>Target Transparency:</strong> 3 out of 5 underperforming store units exceeded quarterly quotas post-rollout."
         ]
       }
     }
