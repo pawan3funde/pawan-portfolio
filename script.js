@@ -982,5 +982,361 @@ FROM CustomerAggregates;`
     }
   });
 
+  /* ── 8. DATA-FLOW SCROLL TRANSITION SYSTEM ─────────────────────── */
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const transitionConfig = {
+      heroToAbout: {
+        heroExitY: -35,
+        heroExitOpacity: 0.7,
+        aboutEntryY: 35
+      },
+      aboutToProjects: {
+        aboutExitScale: 0.985,
+        aboutExitY: -25,
+        projectCardEntryScale: 0.93,
+        projectCardEntryY: 45
+      },
+      projectsToFramework: {
+        projectsExitScale: 0.985,
+        projectsExitY: -20,
+        stepEntryY: 30
+      },
+      frameworkToSkills: {
+        frameworkExitY: -25,
+        skillsEntryY: 35
+      },
+      skillsToCerts: {
+        skillsExitScale: 0.985,
+        certsEntryY: 35
+      },
+      certsToExp: {
+        certsExitY: -25,
+        entryY: 30
+      },
+      expToContact: {
+        contactEntryScale: 0.96,
+        contactEntryY: 30
+      }
+    };
+
+    // Helper: Wire Data-Flow Pipeline Connectors
+    function wireConnector(selector) {
+      const conn = document.querySelector(selector);
+      if (!conn) return;
+      const fill = conn.querySelector(".df-line-fill");
+      const pulse = conn.querySelector(".df-pulse");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: conn,
+          start: "top 88%",
+          end: "bottom 40%",
+          scrub: 0.5,
+          onToggle: (self) => {
+            conn.classList.toggle("active", self.isActive);
+          }
+        }
+      });
+
+      if (fill) {
+        tl.fromTo(fill, { scaleY: 0 }, { scaleY: 1, ease: "none" }, 0);
+      }
+      if (pulse) {
+        tl.fromTo(pulse, { y: 0, opacity: 0.2 }, { y: 48, opacity: 1, ease: "none" }, 0);
+      }
+    }
+
+    // 01: Hero -> About
+    gsap.to(".hero-header", {
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.5
+      },
+      y: transitionConfig.heroToAbout.heroExitY,
+      opacity: transitionConfig.heroToAbout.heroExitOpacity,
+      ease: "none"
+    });
+
+    gsap.fromTo("#about .about-main",
+      { y: transitionConfig.heroToAbout.aboutEntryY, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#about",
+          start: "top 85%",
+          end: "top 40%",
+          scrub: 0.6
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    gsap.fromTo("#about .about-sidebar",
+      { y: 50, opacity: 0.35, scale: 0.96 },
+      {
+        scrollTrigger: {
+          trigger: "#about",
+          start: "top 80%",
+          end: "top 35%",
+          scrub: 0.6
+        },
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        ease: "power2.out"
+      }
+    );
+
+    // 02: About -> Projects
+    gsap.to("#about .container", {
+      scrollTrigger: {
+        trigger: "#about",
+        start: "bottom 85%",
+        end: "bottom 30%",
+        scrub: 0.5
+      },
+      scale: transitionConfig.aboutToProjects.aboutExitScale,
+      y: transitionConfig.aboutToProjects.aboutExitY,
+      ease: "none"
+    });
+
+    gsap.fromTo("#projects .section-heading, #projects .section-label",
+      { y: 25, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#projects",
+          start: "top 85%",
+          end: "top 55%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    document.querySelectorAll(".project-item").forEach((item, index) => {
+      gsap.fromTo(item,
+        {
+          y: index === 0 ? transitionConfig.aboutToProjects.projectCardEntryY : 35,
+          scale: index === 0 ? transitionConfig.aboutToProjects.projectCardEntryScale : 0.96,
+          opacity: 0.35
+        },
+        {
+          scrollTrigger: {
+            trigger: item,
+            start: "top 90%",
+            end: "top 60%",
+            scrub: 0.6
+          },
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          ease: "power2.out"
+        }
+      );
+    });
+
+    // 03: Projects -> Framework
+    gsap.fromTo("#framework .section-heading, #framework .section-intro, #framework .section-label",
+      { y: 25, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#framework",
+          start: "top 85%",
+          end: "top 55%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    document.querySelectorAll(".framework-step").forEach((step) => {
+      gsap.fromTo(step,
+        { y: transitionConfig.projectsToFramework.stepEntryY, opacity: 0.3, scale: 0.97 },
+        {
+          scrollTrigger: {
+            trigger: step,
+            start: "top 90%",
+            end: "top 65%",
+            scrub: 0.5
+          },
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          ease: "power2.out"
+        }
+      );
+    });
+
+    // 04: Framework -> Technical Stack
+    gsap.to("#framework .container", {
+      scrollTrigger: {
+        trigger: "#framework",
+        start: "bottom 85%",
+        end: "bottom 30%",
+        scrub: 0.5
+      },
+      y: transitionConfig.frameworkToSkills.frameworkExitY,
+      opacity: 0.85,
+      ease: "none"
+    });
+
+    gsap.fromTo("#skills .section-heading, #skills .section-label",
+      { y: 25, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top 85%",
+          end: "top 55%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    document.querySelectorAll(".skill-group").forEach((grp) => {
+      gsap.fromTo(grp,
+        { y: transitionConfig.frameworkToSkills.skillsEntryY, opacity: 0.35, scale: 0.97 },
+        {
+          scrollTrigger: {
+            trigger: grp,
+            start: "top 90%",
+            end: "top 65%",
+            scrub: 0.5
+          },
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          ease: "power2.out"
+        }
+      );
+    });
+
+    // 05: Technical Stack -> Certifications
+    gsap.fromTo("#certifications .section-heading, #certifications .section-intro, #certifications .section-label",
+      { y: 25, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#certifications",
+          start: "top 85%",
+          end: "top 55%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    document.querySelectorAll(".cert-card").forEach((card) => {
+      gsap.fromTo(card,
+        { y: transitionConfig.skillsToCerts.certsEntryY, opacity: 0.3, scale: 0.97 },
+        {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 90%",
+            end: "top 65%",
+            scrub: 0.5
+          },
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          ease: "power2.out"
+        }
+      );
+    });
+
+    // 06: Certifications -> Experience
+    gsap.fromTo("#experience .section-heading, #experience .section-label",
+      { y: 25, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#experience",
+          start: "top 85%",
+          end: "top 55%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    document.querySelectorAll(".timeline-entry").forEach((entry) => {
+      gsap.fromTo(entry,
+        { y: transitionConfig.certsToExp.entryY, opacity: 0.3, scale: 0.98 },
+        {
+          scrollTrigger: {
+            trigger: entry,
+            start: "top 90%",
+            end: "top 70%",
+            scrub: 0.5
+          },
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          ease: "power2.out"
+        }
+      );
+    });
+
+    // 07: Experience -> Contact
+    gsap.fromTo("#contact .section-heading, #contact .section-label, #contact .contact-intro",
+      { y: 20, opacity: 0.4 },
+      {
+        scrollTrigger: {
+          trigger: "#contact",
+          start: "top 85%",
+          end: "top 60%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    gsap.fromTo("#contact .contact-card",
+      {
+        y: transitionConfig.expToContact.contactEntryY,
+        scale: transitionConfig.expToContact.contactEntryScale,
+        opacity: 0.35
+      },
+      {
+        scrollTrigger: {
+          trigger: "#contact .contact-card",
+          start: "top 90%",
+          end: "top 65%",
+          scrub: 0.6
+        },
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        ease: "power2.out"
+      }
+    );
+
+    // Wire all 7 Connectors
+    wireConnector('[data-connector="hero-about"]');
+    wireConnector('[data-connector="about-projects"]');
+    wireConnector('[data-connector="projects-framework"]');
+    wireConnector('[data-connector="framework-skills"]');
+    wireConnector('[data-connector="skills-certs"]');
+    wireConnector('[data-connector="certs-exp"]');
+    wireConnector('[data-connector="exp-contact"]');
+  }
+
 });
 
