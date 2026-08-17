@@ -982,42 +982,5 @@ FROM CustomerAggregates;`
     }
   });
 
-  /* ── 8. ANIMATED STATS NUMBERS OBSERVER ───────────────────────── */
-  const statElements = document.querySelectorAll(".stat-value[data-count]");
-  if (statElements.length > 0 && "IntersectionObserver" in window) {
-    const statsObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseFloat(el.getAttribute("data-count"));
-          const prefix = el.getAttribute("data-prefix") || "";
-          const suffix = el.getAttribute("data-suffix") || "";
-          const isDecimal = target % 1 !== 0;
-          const duration = 1400;
-          const startTime = performance.now();
-
-          function updateCounter(now) {
-            const progress = Math.min((now - startTime) / duration, 1);
-            // Ease out cubic
-            const ease = 1 - Math.pow(1 - progress, 3);
-            const current = target * ease;
-            el.textContent = `${prefix}${isDecimal ? current.toFixed(1) : Math.floor(current)}${suffix}`;
-
-            if (progress < 1) {
-              requestAnimationFrame(updateCounter);
-            } else {
-              el.textContent = `${prefix}${isDecimal ? target.toFixed(1) : target}${suffix}`;
-            }
-          }
-
-          requestAnimationFrame(updateCounter);
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.3 });
-
-    statElements.forEach(el => statsObserver.observe(el));
-  }
-
 });
 
