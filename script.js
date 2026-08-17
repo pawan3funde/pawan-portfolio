@@ -887,12 +887,14 @@ FROM CustomerAggregates;`
     lightboxCaption.textContent = caption || "";
     lightboxModal.classList.add("open");
     lightboxModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
   }
 
   function closeLightbox() {
     if (!lightboxModal) return;
     lightboxModal.classList.remove("open");
     lightboxModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
   }
 
   if (modalMainImg) {
@@ -906,6 +908,17 @@ FROM CustomerAggregates;`
       openLightbox(modalModelImg.src, "Power BI Star Schema Data Model Architecture");
     });
   }
+
+  // Certificate In-Page Preview Triggers
+  document.querySelectorAll(".open-cert-preview-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const src = btn.getAttribute("data-cert-img");
+      const title = btn.getAttribute("data-cert-title") || "Certificate Preview";
+      if (src) {
+        openLightbox(src, title);
+      }
+    });
+  });
 
   if (lightboxCloseBtn) {
     lightboxCloseBtn.addEventListener("click", closeLightbox);
