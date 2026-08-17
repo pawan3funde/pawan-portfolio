@@ -982,5 +982,189 @@ FROM CustomerAggregates;`
     }
   });
 
+  /* ── 8. APPLE-INSPIRED CINEMATIC SCROLL ENGINE (GSAP + LENIS) ──── */
+  const animationConfig = {
+    hero: {
+      yOffset: -50,
+      opacityEnd: 0.15
+    },
+    cinematicShowcase: {
+      stages: [
+        { id: 1, name: "rag", label: "Production RAG Pipeline • Live Telemetry", glow: "rgba(56, 189, 248, 0.16)" },
+        { id: 2, name: "fraud", label: "Anomaly Engine • 500K+ Logs Processed", glow: "rgba(239, 68, 68, 0.14)" },
+        { id: 3, name: "rfm", label: "K-Means Cluster • ₹5.1B GMV Modeled", glow: "rgba(34, 197, 94, 0.15)" }
+      ]
+    }
+  };
+
+  // 1. Initialize Lenis Smooth Scrolling
+  let lenis = null;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion && typeof Lenis !== "undefined") {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+      infinite: false
+    });
+
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+  }
+
+  // 2. GSAP ScrollTrigger Timelines
+  if (!prefersReducedMotion && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Zoom & Scroll-Out Transition
+    const heroHeader = document.querySelector(".hero-header");
+    const heroTeaserGlass = document.querySelector(".hero-teaser-glass");
+
+    if (heroHeader && heroTeaserGlass) {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.8
+        }
+      })
+      .to(heroHeader, {
+        y: animationConfig.hero.yOffset,
+        opacity: animationConfig.hero.opacityEnd,
+        ease: "none"
+      })
+      .to(heroTeaserGlass, {
+        rotateX: 0,
+        scale: 1.02,
+        y: -30,
+        ease: "none"
+      }, 0);
+    }
+
+    // Pinned Cinematic Showcase Timeline
+    const cinematicSection = document.getElementById("cinematicShowcase");
+    const deviceFrame = document.getElementById("deviceFrame");
+    const storySlides = [
+      document.getElementById("storySlide1"),
+      document.getElementById("storySlide2"),
+      document.getElementById("storySlide3")
+    ];
+    const screenSlides = [
+      document.getElementById("screenSlide1"),
+      document.getElementById("screenSlide2"),
+      document.getElementById("screenSlide3")
+    ];
+    const hudSteps = document.querySelectorAll(".hud-step");
+    const hudProgressFill = document.getElementById("hudProgressFill");
+    const deviceStatusPillText = document.querySelector("#deviceStatusPill .dsp-text");
+    const ambientGlow = document.querySelector(".cinematic-ambient-glow");
+
+    if (cinematicSection && deviceFrame && storySlides[0] && screenSlides[0]) {
+      const isMobile = window.innerWidth <= 768;
+
+      if (!isMobile) {
+        const showcaseTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: cinematicSection,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1, // Fluid Apple-grade damping
+            onUpdate: (self) => {
+              const progress = self.progress;
+              if (hudProgressFill) {
+                hudProgressFill.style.height = `${Math.max(12, progress * 100)}%`;
+              }
+              // Active stage highlight
+              let currentStage = 1;
+              if (progress > 0.65) currentStage = 3;
+              else if (progress > 0.32) currentStage = 2;
+
+              hudSteps.forEach((step, idx) => {
+                step.classList.toggle("active", idx + 1 === currentStage);
+              });
+
+              if (deviceStatusPillText && animationConfig.cinematicShowcase.stages[currentStage - 1]) {
+                deviceStatusPillText.textContent = animationConfig.cinematicShowcase.stages[currentStage - 1].label;
+              }
+              if (ambientGlow && animationConfig.cinematicShowcase.stages[currentStage - 1]) {
+                const color = animationConfig.cinematicShowcase.stages[currentStage - 1].glow;
+                ambientGlow.style.background = `radial-gradient(circle at 60% 45%, ${color} 0%, rgba(129, 140, 248, 0.04) 40%, transparent 70%)`;
+              }
+            }
+          }
+        });
+
+        // Initial state
+        gsap.set(storySlides[0], { opacity: 1, y: 0 });
+        gsap.set(screenSlides[0], { opacity: 1, scale: 1, y: 0 });
+        gsap.set(storySlides[1], { opacity: 0, y: 40 });
+        gsap.set(screenSlides[1], { opacity: 0, scale: 0.95, y: 25 });
+        gsap.set(storySlides[2], { opacity: 0, y: 40 });
+        gsap.set(screenSlides[2], { opacity: 0, scale: 0.95, y: 25 });
+
+        // Stage 1 Entrance
+        showcaseTL
+          .fromTo(deviceFrame, { scale: 0.9, rotateY: 6, rotateX: 6, opacity: 0.8 }, { scale: 1, rotateY: 0, rotateX: 0, opacity: 1, duration: 0.2, ease: "power2.out" }, 0);
+
+        // Stage 1 -> Stage 2 Transition (0.28 -> 0.54)
+        showcaseTL
+          // Fade/Slide out Stage 1
+          .to(storySlides[0], { opacity: 0, y: -40, duration: 0.12, ease: "power2.in" }, 0.28)
+          .to(screenSlides[0], { opacity: 0, scale: 0.92, y: -25, duration: 0.14, ease: "power2.in" }, 0.28)
+          // 3D subtle tilt pulse on device frame
+          .to(deviceFrame, { rotateY: -3, rotateX: 2, scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 }, 0.32)
+          // Fade/Slide in Stage 2
+          .to(storySlides[1], { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.36)
+          .to(screenSlides[1], { opacity: 1, scale: 1, y: 0, duration: 0.16, ease: "power2.out" }, 0.36);
+
+        // Stage 2 -> Stage 3 Transition (0.62 -> 0.88)
+        showcaseTL
+          // Fade/Slide out Stage 2
+          .to(storySlides[1], { opacity: 0, y: -40, duration: 0.12, ease: "power2.in" }, 0.62)
+          .to(screenSlides[1], { opacity: 0, scale: 0.92, y: -25, duration: 0.14, ease: "power2.in" }, 0.62)
+          // 3D subtle tilt pulse on device frame
+          .to(deviceFrame, { rotateY: 3, rotateX: -2, scale: 0.98, duration: 0.08, yoyo: true, repeat: 1 }, 0.66)
+          // Fade/Slide in Stage 3
+          .to(storySlides[2], { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.70)
+          .to(screenSlides[2], { opacity: 1, scale: 1, y: 0, duration: 0.16, ease: "power2.out" }, 0.70);
+
+        // Smooth release transition at end of pinned showcase
+        showcaseTL
+          .to(deviceFrame, { scale: 0.96, opacity: 0.9, y: -20, duration: 0.1 }, 0.92);
+
+        // Click HUD steps to scroll directly to stage
+        hudSteps.forEach((step, idx) => {
+          step.addEventListener("click", () => {
+            const startScroll = cinematicSection.offsetTop;
+            const totalHeight = cinematicSection.offsetHeight - window.innerHeight;
+            const targetPos = startScroll + (totalHeight * (idx * 0.45));
+            if (lenis) {
+              lenis.scrollTo(targetPos, { duration: 1.2 });
+            } else {
+              window.scrollTo({ top: targetPos, behavior: "smooth" });
+            }
+          });
+        });
+      }
+    }
+  }
+
 });
 
