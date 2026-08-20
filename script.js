@@ -525,20 +525,20 @@ print(f"Answer Relevancy:   {results['answer_relevancy']:.4f}")`
         ]
       },
       architecture: {
-        img: "assets/projects/upi-fraud/dashboard.svg",
-        caption: "UPI Financial Transaction Modeling & Merchant Risk Architecture",
+        img: "assets/projects/upi-fraud/schema.png",
+        caption: "Power BI UPI Star Schema Data Model & Entity-Relationship Architecture",
         cards: [
           {
-            title: "Fact_UPITransactions",
-            desc: "Contains transaction IDs, customer IDs, VPA handles, amounts, failure codes, and device fingerprints."
+            title: "Central Fact: upi_transaction_history",
+            desc: "Stores 100K+ transaction records linked via 1:* relationships to Customers, Devices, Accounts, and Date dimension."
           },
           {
-            title: "Dim_Customer & Dim_Merchant",
-            desc: "Aggregates customer profiles, risk categories, merchant categorization (MCC codes), and historical chargeback ratios."
+            title: "Dimensions: customer_master & device_info",
+            desc: "Tracks customer demographic profiles, business user status, OS versions, rooted status, and device risk telemetry."
           },
           {
-            title: "Dax Measures Calculation Table",
-            desc: "Houses 16 specialized measures for ATV, fraud rates, channel velocity, and multi-factor risk scoring."
+            title: "Risk & Feedback: fraud_alert_history & surveys",
+            desc: "Monitors real-time fraud alert triggers, resolution turnaround times, customer feedback scores, and linked bank accounts."
           }
         ]
       },
