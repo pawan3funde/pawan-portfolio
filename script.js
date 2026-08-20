@@ -530,63 +530,166 @@ print(f"Answer Relevancy:   {results['answer_relevancy']:.4f}")`
         cards: [
           {
             title: "Fact_UPITransactions",
-            desc: "Contains transaction IDs, VPA handles, amounts, failure codes, and device fingerprints."
+            desc: "Contains transaction IDs, customer IDs, VPA handles, amounts, failure codes, and device fingerprints."
           },
           {
-            title: "Dim_Merchant & Dim_BankRoute",
-            desc: "Aggregates merchant categorization (MCC codes), gateway routing SLAs, and historical chargeback ratios."
+            title: "Dim_Customer & Dim_Merchant",
+            desc: "Aggregates customer profiles, risk categories, merchant categorization (MCC codes), and historical chargeback ratios."
           },
           {
-            title: "Temporal Partitioning",
-            desc: "Modeled 24-hour time slices to detect rapid nocturnal velocity anomalies."
+            title: "Dax Measures Calculation Table",
+            desc: "Houses 16 specialized measures for ATV, fraud rates, channel velocity, and multi-factor risk scoring."
           }
         ]
       },
       code: [
         {
-          title: "DAX • 7-Day Rolling Fraud Chargeback Ratio",
-          code: `Rolling 7D Fraud Rate % = 
-VAR CurrentDate = MAX(Dim_Date[DateKey])
-VAR PeriodSpend = 
-    CALCULATE(
-        [Total Fraud Amount],
-        DATESINPERIOD(Dim_Date[FullDate], CurrentDate, -7, DAY)
-    )
-VAR TotalPeriodSpend = 
-    CALCULATE(
-        [Total Transaction Volume],
-        DATESINPERIOD(Dim_Date[FullDate], CurrentDate, -7, DAY)
-    )
-RETURN
-    DIVIDE(PeriodSpend, TotalPeriodSpend, 0)`
+          title: "DAX • Core KPIs & Transaction Volume Measures",
+          code: `-- 1. Total Transactions Count
+Total Transactions = COUNTROWS('UPI_Transactions')
+
+-- 2. Total Transaction Amount (INR)
+Total Transaction Amount = SUM('UPI_Transactions'[Amount])
+
+-- 3. Average Transaction Value (ATV)
+Average Transaction Value = 
+DIVIDE(
+    [Total Transaction Amount],
+    [Total Transactions],
+    0
+)
+
+-- 4. Total Distinct Customers Count
+Total Customers = DISTINCTCOUNT('UPI_Transactions'[Customer_ID])
+
+-- 5. Average Transactions per Customer Velocity
+Avg Transactions per Customer = 
+DIVIDE(
+    [Total Transactions],
+    [Total Customers],
+    0
+)
+
+-- 6. Customer Satisfaction Index (Avg Rating)
+Customer Satisfaction = AVERAGE('UPI_Transactions'[Satisfaction_Rating])
+
+-- 7. Top Region by Total Transaction Volume
+Top Region = 
+CALCULATE(
+    SELECTEDVALUE('UPI_Transactions'[Region]),
+    TOPN(1, VALUES('UPI_Transactions'[Region]), [Total Transaction Amount], DESC)
+)`
         },
         {
-          title: "SQL • Merchant Category Risk & Failure Velocity Matrix",
+          title: "DAX • Fraud Detection & Channel Risk Analysis",
+          code: `-- 8. Total Flagged Fraud Transactions Count
+Total Fraud Txns = 
+CALCULATE(
+    [Total Transactions],
+    'UPI_Transactions'[Is_Fraud] = 1
+)
+
+-- 9. System-Wide Fraud Rate Percentage
+Fraud Rate % = 
+DIVIDE(
+    [Total Fraud Txns],
+    [Total Transactions],
+    0
+) * 100
+
+-- 10. Merchant Fraud Count
+Merchant Fraud Count = 
+CALCULATE(
+    [Total Fraud Txns],
+    'UPI_Transactions'[Transaction_Type] = "Merchant_Payment"
+)
+
+-- 11. Transaction Failure Rate Percentage
+Transaction Failure Rate = 
+VAR FailedTxns = 
+    CALCULATE(
+        [Total Transactions],
+        'UPI_Transactions'[Status] = "Failed"
+    )
+RETURN
+    DIVIDE(FailedTxns, [Total Transactions], 0) * 100
+
+-- 12. Channel Fraud Rate (QR Code, App, Intent)
+Fraud Rate by Channel % = 
+DIVIDE(
+    [Total Fraud Txns],
+    CALCULATE([Total Transactions]),
+    0
+) * 100
+
+-- 13. Device-Wise Fraud Proportion Percentage
+Fraud Rate by Device % = 
+DIVIDE(
+    [Total Fraud Txns],
+    CALCULATE([Total Fraud Txns], ALLSELECTED('UPI_Transactions'[Device_Type])),
+    0
+) * 100`
+        },
+        {
+          title: "DAX • Customer Risk Scoring & Anomaly Classification",
+          code: `-- 14. Customer Fraud Score Algorithm (Composite 0.0 to 1.0)
+Customer Fraud Score = 
+VAR CustomerTxns = [Total Transactions]
+VAR CustomerFraud = [Total Fraud Txns]
+VAR FailureCount = CALCULATE([Total Transactions], 'UPI_Transactions'[Status] = "Failed")
+RETURN
+    IF(
+        CustomerTxns > 0,
+        (CustomerFraud * 0.6) + (DIVIDE(FailureCount, CustomerTxns, 0) * 0.4),
+        0
+    )
+
+-- 15. Customer Risk Tier Categorization
+Customer Risk Category = 
+SWITCH(
+    TRUE(),
+    [Customer Fraud Score] >= 0.70, "High Risk",
+    [Customer Fraud Score] >= 0.35, "Medium Risk",
+    "Low Risk"
+)
+
+-- 16. High Risk Customer Count Filter
+High Risk Customers = 
+CALCULATE(
+    DISTINCTCOUNT('UPI_Transactions'[Customer_ID]),
+    FILTER(
+        VALUES('UPI_Transactions'[Customer_ID]),
+        [Customer Fraud Score] >= 0.70 || [Total Fraud Txns] >= 5
+    )
+)`
+        },
+        {
+          title: "SQL • High-Risk Transaction Extraction & Velocity Query",
           code: `SELECT 
-    m.merchant_category,
-    COUNT(t.transaction_id) AS total_tx_count,
+    t.channel_type,
+    t.device_type,
+    COUNT(t.transaction_id) AS total_txns,
     SUM(t.amount_inr) AS total_volume_inr,
     ROUND(AVG(CASE WHEN t.status = 'FAILED' THEN 1.0 ELSE 0.0 END) * 100, 2) AS failure_rate_pct,
     ROUND(AVG(CASE WHEN t.is_flagged_fraud = 1 THEN 1.0 ELSE 0.0 END) * 100, 2) AS fraud_rate_pct,
-    DENSE_RANK() OVER (ORDER BY SUM(CASE WHEN t.is_flagged_fraud = 1 THEN t.amount_inr ELSE 0 END) DESC) AS risk_rank
+    COUNT(DISTINCT CASE WHEN t.is_flagged_fraud = 1 THEN t.customer_id END) AS high_risk_customers
 FROM fact_upi_transactions t
-JOIN dim_merchant m ON t.merchant_id = m.merchant_id
-WHERE t.transaction_date >= CURRENT_DATE - INTERVAL 30 DAY
-GROUP BY m.merchant_category
-ORDER BY risk_rank ASC;`
+GROUP BY t.channel_type, t.device_type
+ORDER BY fraud_rate_pct DESC;`
         }
       ],
       report: {
-        problem: "Digital payment gateways experienced rising dispute ratios in high-risk categories (P2P transfers, gaming) without granular visibility into fraudulent transaction velocity.",
+        problem: "Digital payment networks and UPI gateways handle high volumes of low-ticket transactions daily. Without automated anomaly scoring and real-time telemetry, detecting fraudulent chargebacks across diverse channels (QR Code, App, Intent) and devices (Feature Phones, Android, iOS) leads to financial leakage and customer friction.",
         approach: [
-          "Performed Exploratory Data Analysis (EDA) on 100,000+ UPI records to model distribution curves and outlier amounts.",
-          "Constructed DAX calculations in Power BI to track velocity spikes (>5 transactions per minute from unique VPAs).",
-          "Generated correlation matrix comparing settlement latency against transaction failure rates."
+          "Modeled 100,000 UPI transactions (₹4.15M total volume) in Power BI with a dedicated DAX Measures calculation table covering 16 tailored risk and business metrics.",
+          "Engineered multi-channel risk metrics tracking Failure Rates (5.87%), Fraud Rates (2.00%), and Channel/Device velocity distribution.",
+          "Constructed Customer Fraud Scoring algorithms isolating 1,408 High-Risk Customers based on behavioral anomalies (Unusual Time, Suspicious Logins, Frequent Failures).",
+          "Built 2 interactive dashboards: Executive Overview (KPIs, Gender, Region & Device volume) and Risk Monitoring Dashboard (Channel risk, Device risk, Anomaly treemap, Top 10 High-Risk Customer table)."
         ],
         impact: [
-          "<strong>&#8377;28.2 Lakhs Potential Loss Avoided:</strong> Early-warning rule simulation flagged high-frequency credential reuse.",
-          "<strong>Actionable Policy Insights:</strong> Recommended dynamic 2FA escalation for transactions originating between 02:00 AM - 05:00 AM.",
-          "<strong>Streamlined Reconciliation:</strong> Reduced dispute triage time across banking partner desks."
+          "<strong>Actionable Channel Insights:</strong> Identified QR Code (2.10%) and App (2.02%) as highest fraud velocity channels, enabling proactive rule thresholds.",
+          "<strong>Behavioral Anomaly Isolation:</strong> Pinpointed 507 Unusual Time spikes and 498 Suspicious Login events for automated 2FA step-up authentication.",
+          "<strong>Executive Visibility & Reporting:</strong> Consolidated 16 DAX measures into executive reports with 1-click PDF download for executive stakeholder alignment."
         ]
       }
     },
