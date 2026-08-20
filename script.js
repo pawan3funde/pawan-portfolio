@@ -507,20 +507,20 @@ print(f"Answer Relevancy:   {results['answer_relevancy']:.4f}")`
       githubUrl: "https://github.com/pawan3funde",
       reportUrl: "assets/projects/upi-fraud/report.pdf",
       visual: {
-        img: "assets/projects/upi-fraud/dashboard.svg",
-        caption: "Power BI Merchant Fraud & Peak Hour Risk Analytics Dashboard",
+        img: "assets/projects/upi-fraud/dashboard.png",
+        caption: "Power BI UPI Transaction Intelligence & Fraud Monitoring Analytics Dashboard",
         takeaways: [
           {
-            title: "100,000+ Transactions Analyzed",
-            desc: "Comprehensive dataset modeling ₹42.8 Crores across 12 distinct merchant categories."
+            title: "100K Transactions & ₹4.15M Volume",
+            desc: "Comprehensive dataset modeling 100,000 transactions across Send (35K), Receive (35K), Merchant (25K), and Bill Pay."
           },
           {
-            title: "3.84% Fraud Chargeback Ratio",
-            desc: "Isolated critical off-peak (02:00 AM - 04:00 AM) high-risk transaction clusters."
+            title: "2.00% Fraud Rate & 5.87% Failure Rate",
+            desc: "Monitored merchant fraud counts (2,000) and regional risk distribution across West (2.09%), South (2.03%), and East."
           },
           {
-            title: "Automated Rule Triggers",
-            desc: "Modeled multi-condition velocity and geo-displacement risk algorithms."
+            title: "1,408 High-Risk Customers Monitored",
+            desc: "Flagged multi-factor anomaly triggers: Unusual Time (507), Suspicious Logins (498), and Frequent Failures (501)."
           }
         ]
       },
