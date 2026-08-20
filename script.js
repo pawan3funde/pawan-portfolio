@@ -702,93 +702,170 @@ ORDER BY fraud_rate_pct DESC;`
       githubUrl: "https://github.com/pawan3funde",
       reportUrl: "assets/projects/black-friday/report.pdf",
       visual: {
-        img: "assets/projects/black-friday/dashboard.svg",
-        caption: "Power BI RFM Customer Quintiles & Commercial Revenue Strategy Dashboard",
+        img: "assets/projects/black-friday/dashboard.png",
+        caption: "Power BI Black Friday Sales Performance, Customer Segmentation & Product Intelligence Dashboards",
         takeaways: [
           {
-            title: "₹5.12 Billion Gross Volume",
-            desc: "Comprehensive retail analytics modeling transaction patterns of 6,000+ unique customers."
+            title: "₹5.10 Billion Gross Sales & 6K Customers",
+            desc: "Analyzed 6,000 unique buyers across City Tiers A, B, and C with ₹865.02K average purchase per customer."
           },
           {
-            title: "Top 15% VIP Champions",
-            desc: "Identified high-margin buyer cohort generating 48.6% of gross campaign value."
+            title: "55% High-Value Revenue Contribution (Pareto Pattern)",
+            desc: "Top 20% premium customers (1.2K) generate ₹2.82bn (55.36%) of total gross sales."
           },
           {
-            title: "Discount Elasticity Modeling",
-            desc: "Preserved 8.2% gross margin by optimizing blanket discounts into targeted loyalty credits."
+            title: "Category & Behavior Intelligence",
+            desc: "Identified Product Categories 18, 9, and 11 with >60% premium penetration and strong repeat loyalty among working professionals (26-45 age group)."
           }
         ]
       },
       architecture: {
-        img: "assets/projects/black-friday/dashboard.svg",
-        caption: "Retail Sales Star Schema & RFM Quintile Scoring Model",
+        img: "assets/projects/black-friday/datamodel.png",
+        caption: "Power BI Sales Fact & Specialized DAX Calculation Tables Architecture",
         cards: [
           {
-            title: "Fact_RetailOrders",
-            desc: "Records item-level purchases, gross revenues, applied discount codes, and basket quantities."
+            title: "Central Fact: Sales Table",
+            desc: "Contains transaction purchases, user IDs, product IDs, marital status, stay years, city categories, and customer types."
           },
           {
-            title: "Dim_Customer (RFM Quintiles)",
-            desc: "Segmented by Recency (R: 1-5), Frequency (F: 1-5), and Monetary value (M: 1-5)."
+            title: "DAX Measure Groups & Calculation Tables",
+            desc: "Structured into dedicated calculation tables: Executive KPIs, Segmentation Measures, Product Intelligence, and Supporting Metrics."
           },
           {
-            title: "Dim_Product & Dim_Demographics",
-            desc: "Product category trees linked with city tiers, age bands, and marital status attributes."
+            title: "Segmentation & Dynamic Ranking Tables",
+            desc: "Computes dynamic Pareto thresholds (Top 20% Cutoff), High-Value flags, repeat buyer rates, and customer ranking."
           }
         ]
       },
       code: [
         {
-          title: "DAX • RFM Customer Tier Segmentation",
-          code: `Customer Segment = 
-VAR R_Score = [Recency Score]
-VAR F_Score = [Frequency Score]
-VAR M_Score = [Monetary Score]
-VAR CompositeScore = R_Score * 100 + F_Score * 10 + M_Score
-RETURN
-    SWITCH(
-        TRUE(),
-        R_Score >= 4 && F_Score >= 4 && M_Score >= 4, "Champions (VIP)",
-        R_Score >= 3 && F_Score >= 3 && M_Score >= 3, "Loyal Customers",
-        R_Score >= 4 && F_Score <= 2, "Recent Potential Loyalists",
-        R_Score <= 2 && F_Score >= 3 && M_Score >= 3, "At Risk (Win-Back)",
-        R_Score <= 2 && F_Score <= 2 && M_Score <= 2, "Lost / Hibernating",
-        "Standard Customers"
-    )`
+          title: "DAX • Executive KPIs & Sales Performance Measures",
+          code: `-- 1. Total Gross Sales Amount
+Total Sales = SUM('Sales'[Purchase])
+
+-- 2. Total Distinct Customer Count
+Total Customers = DISTINCTCOUNT('Sales'[User_ID])
+
+-- 3. Average Purchase Amount per Customer
+Avg Purchase/Customer = 
+DIVIDE(
+    [Total Sales],
+    [Total Customers],
+    0
+)
+
+-- 4. High-Value Customer Revenue Contribution % (Pareto Index)
+HighValue Contribution % = 
+DIVIDE(
+    [HighValue Revenue],
+    [Total Sales],
+    0
+)
+
+-- 5. High-Value Customer Count
+HighValue Customers = 
+CALCULATE(
+    [Total Customers],
+    'Sales'[Customer Type] = "HighValue"
+)`
         },
         {
-          title: "SQL • Customer RFM Quintile Calculation",
-          code: `WITH CustomerAggregates AS (
+          title: "DAX • Customer Segmentation & Repeat Behavior Measures",
+          code: `-- 6. Dynamic Customer Rank by Monetary Spend
+Customer Rank = 
+RANKX(
+    ALL('Sales'[User_ID]),
+    [Total Sales],
+    ,
+    DESC,
+    Dense
+)
+
+-- 7. Top 20% Pareto Cutoff Threshold
+Top 20 Cutoff = [Total Customers] * 0.20
+
+-- 8. Dynamic High-Value vs. Low-Value Customer Flag
+HighValue Flag = 
+IF(
+    [Customer Rank] <= [Top 20 Cutoff],
+    "HighValue",
+    "LowValue"
+)
+
+-- 9. Repeat Customer Purchase Rate Percentage
+Repeat Rate % = 
+DIVIDE(
+    [Repeat_Customers],
+    [Total Customers],
+    0
+) * 100`
+        },
+        {
+          title: "DAX • Product Intelligence & Category Penetration",
+          code: `-- 10. High-Value Product Category Revenue Penetration %
+High-Value Revenue Penetration % = 
+DIVIDE(
+    CALCULATE([HighValue Revenue]),
+    CALCULATE([Total Product Revenue]),
+    0
+)
+
+-- 11. Average Revenue Generated per Product SKU
+Avg Revenue per Product = 
+DIVIDE(
+    [Total Product Revenue],
+    [Total Products Sold],
+    0
+)
+
+-- 12. Category 1 Revenue Contribution Share
+Product_Category1_Contribution% = 
+DIVIDE(
+    CALCULATE([Total Sales], 'Sales'[Product_Category_1] = 1),
+    [Total Sales],
+    0
+) * 100`
+        },
+        {
+          title: "SQL • Customer Pareto Percentile & Spend Segmentation",
+          code: `WITH CustomerSpend AS (
     SELECT 
         user_id,
-        DATEDIFF(CURRENT_DATE, MAX(purchase_date)) AS recency_days,
-        COUNT(DISTINCT order_id) AS frequency_orders,
-        SUM(purchase_amount) AS monetary_spend
-    FROM fact_retail_sales
-    GROUP BY user_id
+        city_category,
+        age,
+        SUM(purchase) AS total_spend,
+        COUNT(product_id) AS total_items,
+        DENSE_RANK() OVER (ORDER BY SUM(purchase) DESC) AS spend_rank,
+        PERCENT_RANK() OVER (ORDER BY SUM(purchase) DESC) AS spend_percentile
+    FROM sales
+    GROUP BY user_id, city_category, age
 )
 SELECT 
     user_id,
-    recency_days,
-    frequency_orders,
-    monetary_spend,
-    NTILE(5) OVER (ORDER BY recency_days DESC) AS r_quintile,
-    NTILE(5) OVER (ORDER BY frequency_orders ASC) AS f_quintile,
-    NTILE(5) OVER (ORDER BY monetary_spend ASC) AS m_quintile
-FROM CustomerAggregates;`
+    city_category,
+    age,
+    total_spend,
+    total_items,
+    CASE 
+        WHEN spend_percentile <= 0.20 THEN 'HighValue (Top 20%)' 
+        ELSE 'LowValue (Bottom 80%)' 
+    END AS customer_segment
+FROM CustomerSpend
+ORDER BY total_spend DESC;`
         }
       ],
       report: {
-        problem: "Retail leadership lacked actionable segmentation during annual high-volume sales, leading to margin erosion from generic 25% sitewide discounts.",
+        problem: "Retail leadership needed granular customer segmentation and SKU rationalization during high-volume Black Friday campaigns to prevent margin dilution from untargeted blanket discounts and optimize promotional spend.",
         approach: [
-          "Engineered an automated RFM calculation engine in Python and SQL to classify 6,000+ buyers into 6 distinct behavioral cohorts.",
-          "Built dynamic DAX measures in Power BI enabling marketing teams to filter cohorts by product affinity and city tier.",
-          "Modeled product cross-sell propensity between electronics and accessory product categories."
+          "Analyzed ₹5.10 Billion sales transaction data across 6,000 customers, 4,000 product SKUs, and 20 product categories in Power BI.",
+          "Engineered multi-table DAX architectures isolating Executive KPIs, Customer Segmentation, Product Intelligence, and Actionable Strategy.",
+          "Formulated a Pareto customer tier (Top 20% vs. Bottom 80%) and mapped demographic purchasing vectors across City Category (B at 41.5%), Age cohorts (26-35 at ₹2.03bn), and Marital Status.",
+          "Evaluated category-level premium revenue penetration to isolate high-affinity product clusters (Categories 18, 9, 11 >60% penetration)."
         ],
         impact: [
-          "<strong>+18.4% Average Order Value (AOV):</strong> Raised AOV from ₹7,800 to ₹9,420 through cross-sell bundles.",
-          "<strong>Targeted Marketing Efficiency:</strong> Reallocated 40% of advertising budget to re-engage 'At Risk' high-monetary cohorts.",
-          "<strong>Inventory Balancing:</strong> Reduced stock-outs in top metro hubs by 22% using regional demand trends."
+          "<strong>Pareto Revenue Optimization:</strong> Proven that 20% high-value customers contribute 55.36% (₹2.82bn) of total revenue, enabling targeted VIP retention.",
+          "<strong>High-Yield Category Allocation:</strong> Prioritized inventory for Categories 18, 9, and 11, maximizing high-margin promotional ROI.",
+          "<strong>Actionable Retention Framework:</strong> Designed age-cohort loyalty strategies (26-45 working professionals) and SKU rationalization plans to eliminate low-performing products."
         ]
       }
     }
